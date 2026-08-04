@@ -5,11 +5,11 @@ Business website for **AJ Pacific** — AI consulting and controlling / performa
 ## Architecture
 
 ```
-Mac (edit website/next-app)
-    ↓  rsync  (see docs/DEPLOYMENT.md)
-VPS /opt/ajpacific/next-app
-    ↓  Docker (npm run dev, volume mount)
-Nginx Proxy Manager (SSL) → Internet
+Source (website/next-app)
+    ↓  deploy script (rsync of app source)
+Hosted Next.js app (Docker)
+    ↓
+Reverse proxy + TLS → Internet
 ```
 
 ## Repository layout
@@ -18,54 +18,60 @@ Nginx Proxy Manager (SSL) → Internet
 aj-pacific/
 ├── README.md
 ├── docs/
-│   ├── DEPLOYMENT.md                      # How to deploy (authoritative)
+│   ├── DEPLOYMENT.md                      # Deploy / ops notes
 │   ├── CHANGELOG-AI-alignment-2026-08.md  # Aug 2026 content rework
 │   └── EXPLORE-AI-OPPORTUNITIES.md        # /explore feature status + backlog
 ├── requirements/
 │   └── AJ_Pacific_Website_AI_Alignment_Spec.md
 ├── scripts/
-│   └── deploy-next-app.sh                 # Working Mac → VPS deploy
-├── deploy.sh                              # LEGACY git deploy — do not use from this Mac
+│   └── deploy-next-app.sh                 # App deploy helper
+├── deploy.sh                              # Legacy deploy script (not the primary path)
 └── website/
-    ├── docker-compose.yml
-    ├── README.md                          # Server manifesto / VPS ops
-    ├── next-app/                          # Next.js application (source of truth for content)
+    ├── docker-compose.yml                 # Local / host stack definition
+    ├── README.md                          # Additional server notes
+    ├── next-app/                          # Next.js application
     └── website-content/                   # Legacy static site
 ```
 
-## Deploy (current, verified)
+## Deploy
 
-From repo root on the Mac:
+From the repo root (with deploy host configured in your environment):
 
 ```bash
 ./scripts/deploy-next-app.sh
-# optional: force container restart
-./scripts/deploy-next-app.sh --restart
+# optional: clear caches / restart more aggressively
+./scripts/deploy-next-app.sh --full
 ```
 
-This rsyncs `website/next-app/` to `root@192.119.88.199:/opt/ajpacific/next-app/`, excluding `node_modules`, `.next`, and env files so server secrets stay put.
+The script syncs `website/next-app/` to the configured remote path and excludes `node_modules`, `.next`, and env files so secrets stay on the host only.
 
-**Full details, discoveries, and troubleshooting:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+Set target via environment variables (not committed):
 
-> **Note:** Root `deploy.sh` is a leftover git-based flow (other host path for SSH keys). It is **not** the supported path from this workspace.
+| Variable | Purpose |
+|----------|---------|
+| `DEPLOY_HOST` | SSH target for deploy (e.g. `user@your-host`) |
+| `DEPLOY_PATH` | Remote app directory |
+
+Defaults in the script are for the project maintainer; override them for your own host.
+
+**Details:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
 ## Local development
 
 ```bash
 cd website/next-app
-cp .env.example .env.local   # add VENICE_API_KEY for chat
+cp .env.example .env.local   # add API keys for chat / explore
 npm install
 npm run dev
 # → http://localhost:3000
 ```
 
-## Live sites
+## Live site
 
 | URL | Purpose |
 |-----|---------|
 | https://dev.aj-pacific.com | Primary Next.js site |
 | https://dev.aj-pacific.com/explore | AI Opportunity Exploration (guided flow) |
-| http://192.119.88.199:81 | Nginx Proxy Manager admin |
 
 ## Recent content work (Aug 2026)
 
@@ -84,16 +90,20 @@ See [docs/CHANGELOG-AI-alignment-2026-08.md](docs/CHANGELOG-AI-alignment-2026-08
 
 Full status, architecture, file map, and backlog: [docs/EXPLORE-AI-OPPORTUNITIES.md](docs/EXPLORE-AI-OPPORTUNITIES.md)
 
-## Docker services (on VPS)
+## Docker services (reference)
 
-| Service | Port | Description |
-|---------|------|-------------|
-| next-app | 3000 | Next.js application |
-| website | (internal) | Legacy static nginx |
-| nginx-proxy-manager | 80, 443, 81 | SSL + routing |
+Typical stack defined in `website/docker-compose.yml`:
+
+| Service | Role |
+|---------|------|
+| next-app | Next.js application |
+| website | Legacy static nginx (optional) |
+| nginx-proxy-manager | TLS and reverse proxy |
+
+Exact host ports and paths depend on your deployment environment.
 
 ## Secrets
 
-- Never commit `.env`, `.env.local`, PEMs, or NPM data (`website/data/`, `website/letsencrypt/`).
+- Never commit `.env`, `.env.local`, PEMs, or proxy-manager runtime data (`website/data/`, `website/letsencrypt/`).
 - Root `.gitignore` covers these.
-- Chat and Explore APIs use `VENICE_API_KEY` / `VENICE_BASE_URL` (see `website/next-app/.env.example`).
+- Chat and Explore APIs expect `VENICE_API_KEY` / `VENICE_BASE_URL` (see `website/next-app/.env.example`).
