@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  /* Soft, even light wash — no dark slide toward the footer */
+  --background-start-rgb: 248, 250, 252; /* slate-50 */
+  --background-end-rgb: 255, 255, 255;
+  --brand-green: #007e3a;
+  --brand-green-light: #00a650;
+}
+
+/* Keep the site light even when the OS prefers dark mode.
+   Dark scheme was making the page feel muddy and broke grey-on-grey contrast. */
+html {
+  color-scheme: light;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  /* Nearly flat light field with a very subtle lift at the top */
+  background-color: #f8fafc;
+  background-image: linear-gradient(
+    180deg,
+    #f1f5f9 0%,
+    #f8fafc 28%,
+    #ffffff 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Primary content card — solid, consistent across the site */
+  .glass {
+    @apply bg-white rounded-xl shadow-lg border border-slate-200/80;
+  }
+
+  .glass-green {
+    @apply bg-white rounded-xl shadow-lg border border-brand/15;
+  }
+
+  /* Soft decorative blobs — keep light and low-contrast */
+  .gradient-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .blob-green {
+    background: linear-gradient(135deg, #007e3a 0%, #34d399 100%);
+  }
+
+  .blob-teal {
+    background: linear-gradient(135deg, #14b8a6 0%, #6ee7b7 100%);
+  }
+
+  .blob-emerald {
+    background: linear-gradient(135deg, #10b981 0%, #a7f3d0 100%);
+  }
+
+  .blob-gold {
+    background: linear-gradient(135deg, #d4a574 0%, #f5e6d3 100%);
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    50% {
+      transform: translateY(-16px) translateX(8px);
+    }
+  }
+
+  @keyframes float-delayed {
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    50% {
+      transform: translateY(16px) translateX(-8px);
+    }
+  }
+
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) translateX(12px) scale(1.03);
+    }
+  }
+
+  .animate-float {
+    animation: float 10s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 12s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 14s ease-in-out infinite;
+  }
+}

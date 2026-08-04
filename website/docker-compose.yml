@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # This is your actual website container
+  website:
+    image: nginx:alpine
+    restart: always
+    container_name: ajpacific-website-1
+    volumes:
+      - ./website-content:/usr/share/nginx/html
+
+  # Next.js Application
+  next-app:
+    image: node:20-alpine
+    container_name: ajpacific-next-app-1
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./next-app:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+    environment:
+      - NODE_ENV=development
+
+  # This is the "Manager" for domains and SSL
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - website
+      - next-app
+    networks:
+      - default
+      - public-network
+      
+networks:
+  public-network:
+    external: true
