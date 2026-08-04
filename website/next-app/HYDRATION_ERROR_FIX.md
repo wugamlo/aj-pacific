@@ -90,14 +90,15 @@ To minimize future hydration errors:
    - Example: `<div key="contact-v2">`
 
 3. **Monitor Container Logs**
-   - Check if Next.js is actually recompiling: `docker logs --tail 50 ajpacific-next-app-1`
+   - Check if Next.js is actually recompiling: `docker logs --tail 50 <next-container-name>`
    - Look for "✓ Compiled /contact in Xms" messages
+   - Container names: see local `.env.deploy` / `docs/OPS.local.md`
 
 ## Related Files
 
-- Next.js App: `/opt/ajpacific/next-app/`
-- Nginx Config: `/opt/ajpacific/data/nginx/proxy_host/1.conf`
-- Docker Compose: `/opt/ajpacific/docker-compose.yml`
+- Next.js app source: `website/next-app/` (this monorepo)
+- Host paths and proxy config: private ops notes only (`docs/OPS.local.md`)
+- Compose definition: `website/docker-compose.yml`
 
 ## Date
 2026-01-26

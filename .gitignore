@@ -36,10 +36,19 @@ website/next-app/next-env.d.ts
 *.env
 !.env.example
 !**/.env.example
+!.env.deploy.example
 website/.env
 website/next-app/.env
 website/next-app/.env.local
 website/next-app/.env*.local
+
+# Host-specific ops (IPs, SSH targets, private runbooks)
+.env.deploy
+docs/OPS.local.md
+docs/DEPLOYMENT.local.md
+**/*.local.md
+!docs/OPS.local.example.md
+!**/*.local.example.md
 
 # -----------------------------------------------------------------------------
 # Nginx Proxy Manager / TLS runtime (must never go public)

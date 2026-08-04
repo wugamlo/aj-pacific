@@ -18,41 +18,41 @@ Reverse proxy + TLS → Internet
 aj-pacific/
 ├── README.md
 ├── docs/
-│   ├── DEPLOYMENT.md                      # Deploy / ops notes
-│   ├── CHANGELOG-AI-alignment-2026-08.md  # Aug 2026 content rework
-│   └── EXPLORE-AI-OPPORTUNITIES.md        # /explore feature status + backlog
+│   ├── DEPLOYMENT.md                      # Public deploy guide
+│   ├── OPS.local.example.md               # Template for private host notes
+│   ├── CHANGELOG-AI-alignment-2026-08.md
+│   └── EXPLORE-AI-OPPORTUNITIES.md
+├── .env.deploy.example                    # Template for deploy targets
 ├── requirements/
 │   └── AJ_Pacific_Website_AI_Alignment_Spec.md
 ├── scripts/
 │   └── deploy-next-app.sh                 # App deploy helper
-├── deploy.sh                              # Legacy deploy script (not the primary path)
+├── deploy.sh                              # Legacy stub (not the primary path)
 └── website/
-    ├── docker-compose.yml                 # Local / host stack definition
-    ├── README.md                          # Additional server notes
+    ├── docker-compose.yml
+    ├── README.md                          # Stack overview (public-safe)
     ├── next-app/                          # Next.js application
     └── website-content/                   # Legacy static site
 ```
 
 ## Deploy
 
-From the repo root (with deploy host configured in your environment):
+Host-specific targets are **not** in git. Copy the templates once:
+
+```bash
+cp .env.deploy.example .env.deploy
+cp docs/OPS.local.example.md docs/OPS.local.md
+# edit both with your SSH host, paths, container names
+```
+
+Then from the repo root:
 
 ```bash
 ./scripts/deploy-next-app.sh
-# optional: clear caches / restart more aggressively
 ./scripts/deploy-next-app.sh --full
 ```
 
-The script syncs `website/next-app/` to the configured remote path and excludes `node_modules`, `.next`, and env files so secrets stay on the host only.
-
-Set target via environment variables (not committed):
-
-| Variable | Purpose |
-|----------|---------|
-| `DEPLOY_HOST` | SSH target for deploy (e.g. `user@your-host`) |
-| `DEPLOY_PATH` | Remote app directory |
-
-Defaults in the script are for the project maintainer; override them for your own host.
+The script loads `.env.deploy` and rsyncs `website/next-app/`, excluding `node_modules`, `.next`, and env files.
 
 **Details:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 

@@ -1,19 +1,35 @@
 #!/usr/bin/env bash
-# Deploy Next.js app source from this Mac to the AJ Pacific VPS.
-# See docs/DEPLOYMENT.md and website/next-app/HYDRATION_ERROR_FIX.md
+# Deploy Next.js app source to the configured host.
+# See docs/DEPLOYMENT.md
+#
+# Configuration (first match wins):
+#   1) Environment variables already exported
+#   2) Repo-root .env.deploy (gitignored) — copy from .env.deploy.example
 #
 # Usage (from repo root):
 #   ./scripts/deploy-next-app.sh              # sync + clear .next + restart Next
-#   ./scripts/deploy-next-app.sh --full       # also restart Nginx Proxy Manager
+#   ./scripts/deploy-next-app.sh --full       # also restart reverse-proxy container
 #   ./scripts/deploy-next-app.sh --sync-only  # rsync only (no restarts)
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOCAL_APP="${REPO_ROOT}/website/next-app"
-REMOTE_HOST="${DEPLOY_HOST:-root@192.119.88.199}"
-REMOTE_APP="${DEPLOY_PATH:-/opt/ajpacific/next-app}"
 MODE="default" # default | full | sync-only
+
+# Load local deploy targets if present (never commit .env.deploy)
+if [[ -f "${REPO_ROOT}/.env.deploy" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "${REPO_ROOT}/.env.deploy"
+  set +a
+fi
+
+DEPLOY_HOST="${DEPLOY_HOST:-}"
+DEPLOY_PATH="${DEPLOY_PATH:-}"
+DEPLOY_NEXT_CONTAINER="${DEPLOY_NEXT_CONTAINER:-}"
+DEPLOY_NPM_CONTAINER="${DEPLOY_NPM_CONTAINER:-}"
+DEPLOY_SITE_URL="${DEPLOY_SITE_URL:-https://dev.aj-pacific.com}"
 
 for arg in "$@"; do
   case "$arg" in
@@ -22,9 +38,10 @@ for arg in "$@"; do
     --restart) MODE="default" ;; # alias kept for older docs
     -h|--help)
       echo "Usage: $0 [--full|--sync-only]"
-      echo "  Syncs website/next-app/ → ${REMOTE_HOST}:${REMOTE_APP}"
-      echo "  Default: clear Next.js .next cache and restart next-app"
-      echo "  --full:  also restart nginx-proxy-manager (use after structural UI changes)"
+      echo "  Syncs website/next-app/ → \$DEPLOY_HOST:\$DEPLOY_PATH"
+      echo "  Configure via .env.deploy (see .env.deploy.example) or env vars."
+      echo "  Default: clear Next.js .next cache and restart Next container"
+      echo "  --full:  also restart reverse-proxy container"
       echo "  --sync-only: files only"
       exit 0
       ;;
@@ -40,14 +57,26 @@ if [[ ! -d "$LOCAL_APP" ]]; then
   exit 1
 fi
 
+if [[ -z "$DEPLOY_HOST" || -z "$DEPLOY_PATH" ]]; then
+  echo "❌ DEPLOY_HOST and DEPLOY_PATH must be set." >&2
+  echo "   Copy .env.deploy.example → .env.deploy and edit, or export the variables." >&2
+  exit 1
+fi
+
+if [[ -z "$DEPLOY_NEXT_CONTAINER" ]]; then
+  echo "❌ DEPLOY_NEXT_CONTAINER must be set (Docker container name for Next.js)." >&2
+  echo "   See .env.deploy.example" >&2
+  exit 1
+fi
+
 echo "🚀 Deploying next-app"
 echo "   From: $LOCAL_APP"
-echo "   To:   ${REMOTE_HOST}:${REMOTE_APP}"
+echo "   To:   ${DEPLOY_HOST}:${DEPLOY_PATH}"
 echo "   Mode: $MODE"
 echo ""
 
-if ! ssh -o BatchMode=yes -o ConnectTimeout=10 "$REMOTE_HOST" 'true'; then
-  echo "❌ Cannot SSH to ${REMOTE_HOST}. Check keys and network." >&2
+if ! ssh -o BatchMode=yes -o ConnectTimeout=10 "$DEPLOY_HOST" 'true'; then
+  echo "❌ Cannot SSH to ${DEPLOY_HOST}. Check keys and network." >&2
   exit 1
 fi
 
@@ -59,7 +88,7 @@ rsync -avz --delete \
   --exclude '.env*.local' \
   --exclude '.DS_Store' \
   "${LOCAL_APP}/" \
-  "${REMOTE_HOST}:${REMOTE_APP}/"
+  "${DEPLOY_HOST}:${DEPLOY_PATH}/"
 
 echo ""
 echo "✅ Files synced."
@@ -70,16 +99,20 @@ if [[ "$MODE" == "sync-only" ]]; then
 fi
 
 echo "🧹 Clearing Next.js .next build cache (prevents stale SSR vs client JS)..."
-ssh "$REMOTE_HOST" 'docker exec ajpacific-next-app-1 sh -c "rm -rf /app/.next" 2>/dev/null || rm -rf /opt/ajpacific/next-app/.next'
+ssh "$DEPLOY_HOST" "docker exec ${DEPLOY_NEXT_CONTAINER} sh -c 'rm -rf /app/.next' 2>/dev/null || rm -rf '${DEPLOY_PATH}/.next'"
 
-echo "🔄 Restarting Next.js container..."
-ssh "$REMOTE_HOST" 'docker restart ajpacific-next-app-1'
+echo "🔄 Restarting Next.js container (${DEPLOY_NEXT_CONTAINER})..."
+ssh "$DEPLOY_HOST" "docker restart ${DEPLOY_NEXT_CONTAINER}"
 
 if [[ "$MODE" == "full" ]]; then
-  echo "🔄 Restarting Nginx Proxy Manager (clears edge asset cache)..."
-  ssh "$REMOTE_HOST" 'docker restart ajpacific-nginx-proxy-manager-1'
-  echo "   Waiting ~25s for both services..."
-  sleep 25
+  if [[ -z "$DEPLOY_NPM_CONTAINER" ]]; then
+    echo "⚠️  DEPLOY_NPM_CONTAINER not set — skipping proxy restart." >&2
+  else
+    echo "🔄 Restarting reverse proxy (${DEPLOY_NPM_CONTAINER})..."
+    ssh "$DEPLOY_HOST" "docker restart ${DEPLOY_NPM_CONTAINER}"
+    echo "   Waiting ~25s for both services..."
+    sleep 25
+  fi
 else
   echo "   Waiting ~15s for Next.js..."
   sleep 15
@@ -87,10 +120,10 @@ fi
 
 echo ""
 echo "📋 Recent Next.js logs:"
-ssh "$REMOTE_HOST" 'docker logs --tail 25 ajpacific-next-app-1' || true
+ssh "$DEPLOY_HOST" "docker logs --tail 25 ${DEPLOY_NEXT_CONTAINER}" || true
 
 echo ""
-echo "🌐 Check: https://dev.aj-pacific.com"
+echo "🌐 Check: ${DEPLOY_SITE_URL}"
 echo "   If UI still looks old: open a private window, or DevTools → Empty Cache and Hard Reload."
 echo "   See: website/next-app/HYDRATION_ERROR_FIX.md"
 echo ""
