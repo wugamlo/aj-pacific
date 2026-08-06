@@ -1,5 +1,35 @@
 import Link from "next/link";
-import { Bot, Compass, LineChart } from "lucide-react";
+import { Bot, GraduationCap, LineChart } from "lucide-react";
+
+const pathways = [
+  {
+    href: "/services/education",
+    title: "AI Education",
+    description:
+      "Practical orientation for people and small teams who want to understand AI before taking action.",
+    icon: GraduationCap,
+    iconBg: "bg-gradient-to-br from-slate-600 to-slate-800",
+    ctaClass: "text-slate-700",
+  },
+  {
+    href: "/services/ai",
+    title: "AI Consulting",
+    description:
+      "From opportunity scan to working automation, agents, and implementation.",
+    icon: Bot,
+    iconBg: "bg-gradient-to-br from-accent to-accent-light",
+    ctaClass: "text-accent-dark",
+  },
+  {
+    href: "/services/controlling",
+    title: "Controlling & Performance",
+    description:
+      "KPIs, forecasting, reporting, and financial clarity for leadership decisions.",
+    icon: LineChart,
+    iconBg: "bg-gradient-to-br from-brand to-brand-light",
+    ctaClass: "text-brand",
+  },
+];
 
 export default function Home() {
   return (
@@ -28,10 +58,9 @@ export default function Home() {
               </h1>
               <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">
                 Practical AI and financial controlling for small and mid-sized
-                companies.
+                companies — from orientation to working solutions.
                 <br className="hidden sm:block" />
-                We help you move from interest to working solutions — clearly
-                and step by step.
+                We help you move clearly and step by step.
               </p>
 
               {/* Primary Explore banner — high-energy entry point */}
@@ -92,48 +121,48 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Positioning cards — how we work, not credentials */}
+          {/* Three pathways — same pillars as /services */}
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand to-brand-light flex items-center justify-center mb-4">
-                <Compass className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Clear starting points
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                Practical orientation for people and small teams still getting
-                started — so you understand how AI works before committing to
-                tools or projects.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center mb-4">
-                <Bot className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Practical AI
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                We focus on useful applications: automation, document
-                intelligence, and simple agents that remove real work. No
-                science projects.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand to-brand-light flex items-center justify-center mb-4">
-                <LineChart className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Finance understanding included
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                Many AI ideas fail because they ignore how the numbers and
-                processes actually work. We bring both perspectives.
-              </p>
-            </div>
+            {pathways.map((path) => {
+              const Icon = path.icon;
+              return (
+                <Link
+                  key={path.href}
+                  href={path.href}
+                  className="group bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left flex flex-col h-full"
+                >
+                  <div
+                    className={`w-14 h-14 rounded-xl ${path.iconBg} flex items-center justify-center mb-4`}
+                  >
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    {path.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed flex-grow">
+                    {path.description}
+                  </p>
+                  <span
+                    className={`mt-4 inline-flex items-center text-sm font-semibold ${path.ctaClass}`}
+                  >
+                    Learn more
+                    <svg
+                      className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Who we work with + location */}
