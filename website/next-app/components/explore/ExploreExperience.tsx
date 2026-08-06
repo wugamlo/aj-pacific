@@ -6,6 +6,8 @@ import StageProgress from "./StageProgress";
 import SummaryCards, { summaryToPlainText } from "./SummaryCards";
 import {
   ChatMessage,
+  EXAMPLE_JOURNEYS,
+  ExampleJourney,
   EXPLORE_STAGES,
   MIN_ANSWERS_FOR_SUMMARY,
   OPENING_MESSAGE,
@@ -24,6 +26,8 @@ export default function ExploreExperience() {
   const [phase, setPhase] = useState<Phase>("interview");
   const [summary, setSummary] = useState<OpportunitySummary | null>(null);
   const [copied, setCopied] = useState(false);
+  /** Which example journey is loaded (if any); null when free-form or reset. */
+  const [activeExampleId, setActiveExampleId] = useState<string | null>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   /** Avoid scrolling the chat (or page) until the visitor has engaged. */
@@ -34,6 +38,9 @@ export default function ExploreExperience() {
   const currentStage = EXPLORE_STAGES[stageIndex];
   const canSummarize =
     userAnswerCount >= MIN_ANSWERS_FOR_SUMMARY && !isLoading && phase === "interview";
+  /** Show example cards until the visitor starts typing or picks a journey. */
+  const showExamples =
+    phase === "interview" && !isLoading && userAnswerCount === 0 && !activeExampleId;
 
   /** Scroll only the chat panel — never the page window (scrollIntoView was pulling the whole page). */
   const scrollChatToBottom = (behavior: ScrollBehavior = "smooth") => {
@@ -119,6 +126,7 @@ export default function ExploreExperience() {
     if (!content || isLoading || phase !== "interview") return;
 
     hasEngagedRef.current = true;
+    setActiveExampleId(null);
     setError(null);
     setIsLoading(true);
 
@@ -183,8 +191,25 @@ export default function ExploreExperience() {
     }
   };
 
+  const loadExampleJourney = (journey: ExampleJourney) => {
+    if (isLoading || phase !== "interview") return;
+
+    hasEngagedRef.current = true;
+    setActiveExampleId(journey.id);
+    setMessages(journey.messages);
+    setInput("");
+    setError(null);
+    setSummary(null);
+    setCopied(false);
+
+    requestAnimationFrame(() => {
+      scrollChatToBottom("auto");
+    });
+  };
+
   const startOver = () => {
     hasEngagedRef.current = false;
+    setActiveExampleId(null);
     setMessages([{ role: "assistant", content: OPENING_MESSAGE }]);
     setInput("");
     setError(null);
@@ -218,15 +243,63 @@ export default function ExploreExperience() {
           Explore AI Opportunities
         </h1>
         <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          A short guided conversation to surface practical AI ideas for your
-          processes. Indicative only — not a full Opportunity Scan.
+          Answer a few questions about how work happens in your organisation.
+          In a couple of minutes you&apos;ll get concrete, practical AI
+          opportunity ideas — ready to discuss or take further.
         </p>
         <p className="text-xs text-slate-500 mt-3 max-w-xl mx-auto">
           This exploration is for discovery only. Conversation turns are not
           stored permanently on our servers. You can copy the summary or book a
-          call when you are ready.
+          call when you are ready. Indicative only — not a full Opportunity
+          Scan.
         </p>
       </div>
+
+      {/* Example journeys — value in under 30s without typing */}
+      {showExamples && (
+        <section className="mb-8" aria-labelledby="try-an-example-heading">
+          <h2
+            id="try-an-example-heading"
+            className="text-lg font-bold text-slate-900 text-center mb-1"
+          >
+            Try an example
+          </h2>
+          <p className="text-sm text-slate-600 text-center mb-4 max-w-xl mx-auto">
+            Not sure where to start? Click one of these typical situations.
+            We&apos;ll pre-fill a short conversation so you can see the kind of
+            ideas the tool produces.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3">
+            {EXAMPLE_JOURNEYS.map((journey) => (
+              <button
+                key={journey.id}
+                type="button"
+                onClick={() => loadExampleJourney(journey)}
+                className="text-left glass p-4 hover:border-brand/40 hover:shadow-xl hover:-translate-y-0.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 min-h-[44px]"
+              >
+                <span className="block text-sm font-bold text-brand mb-1.5">
+                  {journey.label}
+                </span>
+                <span className="block text-xs text-slate-600 leading-relaxed">
+                  {journey.description}
+                </span>
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-slate-400 text-center mt-3">
+            These are illustrative only — your real situation will produce
+            different ideas.
+          </p>
+        </section>
+      )}
+
+      {activeExampleId && phase === "interview" && (
+        <p className="text-xs text-center text-slate-500 mb-4">
+          Example loaded — hit{" "}
+          <span className="font-semibold text-slate-700">Generate summary</span>{" "}
+          to see opportunity cards, or keep chatting to refine.
+        </p>
+      )}
 
       <div className="glass p-4 md:p-5 mb-6">
         <StageProgress

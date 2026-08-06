@@ -4,7 +4,7 @@ import ExploreExperience from "@/components/explore/ExploreExperience";
 export const metadata: Metadata = {
   title: "Explore AI Opportunities | AJ Pacific",
   description:
-    "A short guided conversation to explore practical AI opportunities in your processes. Indicative ideas — not a full Opportunity Scan.",
+    "Answer a few questions about how work happens in your organisation. In a couple of minutes you'll get concrete, practical AI opportunity ideas — ready to discuss or take further.",
 };
 
 export default function ExplorePage() {

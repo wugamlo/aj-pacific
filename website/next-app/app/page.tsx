@@ -27,27 +27,44 @@ export default function Home() {
                 <span className="text-brand">Finance</span>
               </h1>
               <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">
-                Two experienced partners with 25 years each in finance and AI. We
-                work alongside you to identify high-impact opportunities, design
-                practical strategies, and implement solutions that deliver real
-                results — on a personal basis, not as distant consultants.
+                Practical AI and financial controlling — from clear
+                prioritisation to working systems.
+                <br className="hidden sm:block" />
+                We work alongside you, not as distant consultants.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col items-center gap-3">
+                <Link
+                  href="/explore"
+                  className="bg-brand text-white px-8 py-4 rounded-xl shadow-lg font-bold hover:bg-brand-dark hover:shadow-xl hover:scale-105 transition-all text-base md:text-lg"
+                >
+                  Explore AI opportunities in 3 minutes
+                </Link>
+                <p className="text-sm text-slate-500 max-w-md">
+                  A short guided conversation that surfaces practical ideas for
+                  your processes. No signup required.
+                </p>
                 <Link
                   href="/services"
-                  className="bg-brand text-white px-8 py-4 rounded-xl shadow-lg font-bold hover:bg-brand-dark hover:shadow-xl hover:scale-105 transition-all"
+                  className="mt-1 text-slate-700 font-semibold hover:text-brand transition-colors underline-offset-4 hover:underline"
                 >
-                  What We Do
-                </Link>
-                <Link
-                  href="/contact"
-                  className="bg-accent text-white px-8 py-4 rounded-xl shadow-lg font-bold hover:bg-accent-dark hover:shadow-xl hover:scale-105 transition-all"
-                >
-                  Let&apos;s Talk
+                  View our services
                 </Link>
               </div>
             </div>
+          </div>
+
+          {/* Opportunity Guide callout */}
+          <div className="mb-8 max-w-2xl mx-auto bg-white rounded-xl border border-brand/20 shadow-md px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+            <p className="text-slate-700 text-sm md:text-base leading-relaxed">
+              Curious where AI could actually help in your company?
+            </p>
+            <Link
+              href="/explore"
+              className="shrink-0 inline-flex items-center justify-center bg-brand/10 text-brand px-5 py-2.5 rounded-lg font-bold hover:bg-brand hover:text-white transition-all min-h-[44px]"
+            >
+              Try the Opportunity Guide
+            </Link>
           </div>
 
           {/* Feature Cards — AI first */}
