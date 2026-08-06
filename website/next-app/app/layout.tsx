@@ -4,6 +4,12 @@ import "../styles/globals.css";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
 import Footer from "@/components/Footer";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 
 const lato = Lato({
   weight: ['300', '400', '700', '900'],
@@ -11,9 +17,25 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "AJ Pacific | Your Partner in AI & Finance",
-  description:
-    "Practical AI education, consulting, and controlling from Hong Kong. Orientation, opportunity assessment, automation, and financial clarity for small and mid-sized organisations.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "AJ Pacific | Your Partner in AI & Finance",
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en",
+    siteName: SITE_NAME,
+    title: "AJ Pacific | Your Partner in AI & Finance",
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    images: [{ url: DEFAULT_OG_IMAGE }],
+  },
 };
 
 // Dynamically import ChatWidget with no SSR to prevent chunk loading issues

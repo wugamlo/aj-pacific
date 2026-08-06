@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Cpu, TrendingUp } from "lucide-react";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "About",
+  description:
+    "AJ Pacific is two experienced consultants in Hong Kong — technology and AI, and finance and controlling — working directly with small and mid-sized organisations.",
+  path: "/about",
+});
 
 const cardClass =
   "bg-white rounded-2xl shadow-lg p-8 border border-slate-200/80 hover:shadow-xl transition-shadow duration-300";

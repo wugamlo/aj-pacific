@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Bot, GraduationCap, TrendingUp } from "lucide-react";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "Our Services",
+  description:
+    "Three complementary practices for small and mid-sized organisations: AI education and orientation, hands-on AI consulting, and financial controlling.",
+  path: "/services",
+});
 
 /**
  * Overview only — detail lives on deep pages.

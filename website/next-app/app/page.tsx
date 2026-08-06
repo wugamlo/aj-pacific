@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Bot, GraduationCap, LineChart } from "lucide-react";
+import { DEFAULT_DESCRIPTION, pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "AJ Pacific | Your Partner in AI & Finance",
+  description: DEFAULT_DESCRIPTION,
+  path: "/",
+  absoluteTitle: true,
+});
 
 const pathways = [
   {

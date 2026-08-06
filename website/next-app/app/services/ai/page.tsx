@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Search, Map, Bot, Wrench } from "lucide-react";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "AI Consulting",
+  description:
+    "Practical AI consulting from opportunity scan to strategy, automation, agents, and hands-on implementation for small and mid-sized organisations.",
+  path: "/services/ai",
+});
 
 const aiServices = [
   {

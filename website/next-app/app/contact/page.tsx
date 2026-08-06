@@ -1,4 +1,12 @@
 import Link from "next/link";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "Contact",
+  description:
+    "Get in touch with AJ Pacific in Hong Kong. Ask about AI education, consulting, controlling, or a practical next step for your organisation.",
+  path: "/contact",
+});
 
 export default function Contact() {
   return (

@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Users, Lightbulb, BookOpen, MessagesSquare } from "lucide-react";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "AI Education",
+  description:
+    "Practical AI orientation for individuals and small teams. Understand how modern AI works, what is realistic today, and sensible first steps — without hype.",
+  path: "/services/education",
+});
 
 const audiences = [
   "Individuals who want to understand AI properly",

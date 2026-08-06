@@ -1,4 +1,12 @@
 import Link from "next/link";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "Controlling & Performance",
+  description:
+    "KPIs, forecasting, reporting, and financial clarity — data-driven controlling for leadership decisions in small and mid-sized organisations.",
+  path: "/services/controlling",
+});
 
 const controllingServices = [
   {
