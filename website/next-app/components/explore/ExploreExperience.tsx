@@ -34,6 +34,8 @@ export default function ExploreExperience() {
   const inputRef = useRef<HTMLInputElement>(null);
   /** Avoid scrolling the chat (or page) until the visitor has engaged. */
   const hasEngagedRef = useRef(false);
+  /** Track loading→idle so we refocus after the input is re-enabled (not while still disabled). */
+  const wasLoadingRef = useRef(false);
 
   const userAnswerCount = messages.filter((m) => m.role === "user").length;
   const stageIndex = Math.min(userAnswerCount, EXPLORE_STAGES.length - 1);
@@ -55,6 +57,21 @@ export default function ExploreExperience() {
     if (!hasEngagedRef.current || phase !== "interview") return;
     scrollChatToBottom("smooth");
   }, [messages, isLoading, phase]);
+
+  /**
+   * Restore caret after a chat turn. Focus must run after re-render once
+   * `disabled={isLoading}` is false — calling focus() in sendMessage's finally
+   * races and fails while the input is still disabled.
+   */
+  useEffect(() => {
+    if (isLoading) {
+      wasLoadingRef.current = true;
+      return;
+    }
+    if (!wasLoadingRef.current || phase !== "interview") return;
+    wasLoadingRef.current = false;
+    inputRef.current?.focus({ preventScroll: true });
+  }, [isLoading, phase]);
 
   const streamChatReply = async (history: ChatMessage[]) => {
     const response = await fetch("/api/explore", {
@@ -152,9 +169,8 @@ export default function ExploreExperience() {
         },
       ]);
     } finally {
+      // Focus is restored by the isLoading→false effect after the input re-enables.
       setIsLoading(false);
-      // Focus without scrolling the page (preventScroll where supported).
-      inputRef.current?.focus({ preventScroll: true });
     }
   };
 
