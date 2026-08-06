@@ -5,6 +5,7 @@ import Link from "next/link";
 import dynamic from 'next/dynamic';
 import Footer from "@/components/Footer";
 import {
+  absoluteUrl,
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
   SITE_NAME,
@@ -34,7 +35,8 @@ export const metadata: Metadata = {
     title: "AJ Pacific | Your Partner in AI & Finance",
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
-    images: [{ url: DEFAULT_OG_IMAGE }],
+    // Absolute URL so og:image is not rewritten to localhost under next dev
+    images: [{ url: absoluteUrl(DEFAULT_OG_IMAGE) }],
   },
 };
 

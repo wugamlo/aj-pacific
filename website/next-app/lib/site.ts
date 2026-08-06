@@ -41,7 +41,8 @@ export function pageMetadata({
       type: "website",
       url,
       siteName: SITE_NAME,
-      images: [{ url: DEFAULT_OG_IMAGE }],
+      // Absolute URL so og:image is not rewritten to localhost under next dev
+      images: [{ url: absoluteUrl(DEFAULT_OG_IMAGE) }],
     },
   };
 }
