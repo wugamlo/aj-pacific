@@ -1,24 +1,40 @@
 import Link from "next/link";
-import { Bot, TrendingUp } from "lucide-react";
+import { Bot, GraduationCap, TrendingUp } from "lucide-react";
 
 /**
- * Overview only — detail lives on /services/ai and /services/controlling.
- * AI card first for consistent positioning.
+ * Overview only — detail lives on deep pages.
+ * Order: Education → Consulting → Controlling (orientation before delivery).
  */
 const pillars = [
+  {
+    href: "/services/education",
+    title: "AI Education",
+    tagline: "Understand before you act",
+    description:
+      "Practical introduction for people and small teams who want to understand AI before taking action.",
+    highlights: [
+      "How current AI actually works",
+      "Realistic capabilities and limits",
+      "Tools, setups, and first steps",
+      "1-to-1, small groups, workshops",
+    ],
+    cta: "Explore AI Education",
+    accent: "education" as const,
+    icon: GraduationCap,
+  },
   {
     href: "/services/ai",
     title: "AI Consulting",
     tagline: "From opportunity scan to working systems",
     description:
-      "Practical AI for real business impact: structured opportunity assessment, strategy and roadmap, process automation and agents, and hands-on implementation with enablement of your team.",
+      "From opportunity scan to working automation, agents, and implementation.",
     highlights: [
       "AI Opportunity Scan",
       "Strategy & Roadmap",
       "Automation & Agents",
       "Implementation & Enablement",
     ],
-    cta: "Explore AI Services",
+    cta: "Explore AI Consulting",
     accent: "ai" as const,
     icon: Bot,
   },
@@ -27,7 +43,7 @@ const pillars = [
     title: "Controlling & Performance",
     tagline: "Financial clarity that drives decisions",
     description:
-      "Data-driven controlling and performance management: KPIs, cost optimization, budgeting and forecasting, variance analysis, and reporting that leadership can act on.",
+      "KPIs, forecasting, reporting, and financial clarity for leadership decisions.",
     highlights: [
       "KPI design & implementation",
       "Cost optimization",
@@ -40,58 +56,70 @@ const pillars = [
   },
 ];
 
+const accentStyles = {
+  education: {
+    iconBg: "bg-gradient-to-br from-slate-600 to-slate-800",
+    tagline: "text-slate-600",
+    dot: "bg-slate-600",
+    cta: "text-slate-700",
+  },
+  ai: {
+    iconBg: "bg-gradient-to-br from-accent to-accent-dark",
+    tagline: "text-accent-dark",
+    dot: "bg-accent-dark",
+    cta: "text-accent-dark",
+  },
+  finance: {
+    iconBg: "bg-gradient-to-br from-brand to-brand-light",
+    tagline: "text-brand",
+    dot: "bg-brand",
+    cta: "text-brand",
+  },
+};
+
 export default function Services() {
   return (
-    <div className="py-12" key="services-overview-v2">
+    <div className="py-12" key="services-overview-v3">
       <div className="text-center mb-14">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
           Our Services
         </h1>
         <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-lg">
-          We offer two complementary practices: practical AI and financial
+          We offer three complementary practices for small and mid-sized
+          organisations—and for individuals who want a practical starting point:
+          orientation in how AI works, hands-on AI consulting, and financial
           controlling.
-        </p>
-        <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-lg mt-3">
-          Both are aimed at small and mid-sized companies that want clear
-          prioritisation and workable solutions rather than large transformation
-          programmes.
         </p>
         <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-base mt-3">
           Choose a path below to see how we work in more detail.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-14">
+      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14">
         {pillars.map((pillar) => {
           const Icon = pillar.icon;
-          const isAi = pillar.accent === "ai";
+          const styles = accentStyles[pillar.accent];
           return (
             <Link
               key={pillar.href}
               href={pillar.href}
-              className="group glass p-8 md:p-10 flex flex-col h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="group glass p-7 md:p-8 flex flex-col h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               <div
-                className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-md ${
-                  isAi
-                    ? "bg-gradient-to-br from-accent to-accent-dark"
-                    : "bg-gradient-to-br from-brand to-brand-light"
-                }`}
+                className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-md ${styles.iconBg}`}
               >
                 <Icon className="w-7 h-7 text-white" />
               </div>
 
               <p
-                className={`text-xs font-semibold uppercase tracking-wider mb-2 ${
-                  isAi ? "text-accent-dark" : "text-brand"
-                }`}
+                className={`text-xs font-semibold uppercase tracking-wider mb-2 ${styles.tagline}`}
               >
                 {pillar.tagline}
               </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+              <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">
                 {pillar.title}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6 flex-grow">
+              <p className="text-slate-600 leading-relaxed mb-6 flex-grow text-sm md:text-base">
                 {pillar.description}
               </p>
 
@@ -102,9 +130,7 @@ export default function Services() {
                     className="flex items-center text-sm text-slate-700"
                   >
                     <span
-                      className={`w-1.5 h-1.5 rounded-full mr-2 shrink-0 ${
-                        isAi ? "bg-accent-dark" : "bg-brand"
-                      }`}
+                      className={`w-1.5 h-1.5 rounded-full mr-2 shrink-0 ${styles.dot}`}
                     />
                     {item}
                   </li>
@@ -112,9 +138,7 @@ export default function Services() {
               </ul>
 
               <span
-                className={`mt-auto inline-flex items-center font-semibold ${
-                  isAi ? "text-accent-dark" : "text-brand"
-                }`}
+                className={`mt-auto inline-flex items-center font-semibold ${styles.cta}`}
               >
                 {pillar.cta}
                 <svg
@@ -141,8 +165,9 @@ export default function Services() {
           Not sure where to start?
         </h3>
         <p className="text-slate-600 text-sm md:text-base mb-5 leading-relaxed">
-          Try a short guided exploration of AI opportunities in your processes,
-          or book an AI Opportunity Call — no obligation.
+          Want a quick probe of AI ideas in your processes? Try Explore. Prefer
+          a grounded orientation first? See AI Education. Already thinking about
+          a project? Get in touch for an AI Opportunity Call.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link
@@ -150,6 +175,12 @@ export default function Services() {
             className="inline-block bg-brand text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all text-sm"
           >
             Explore Opportunities
+          </Link>
+          <Link
+            href="/services/education"
+            className="inline-block bg-white text-slate-900 px-6 py-3 rounded-xl font-bold border border-slate-200 hover:bg-slate-50 transition-all text-sm"
+          >
+            AI Education
           </Link>
           <Link
             href="/contact"

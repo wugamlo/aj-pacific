@@ -102,8 +102,9 @@ export default function Home() {
                 Clear starting points
               </h3>
               <p className="text-slate-600 leading-relaxed">
-                We begin with your actual processes and constraints — not with
-                tools or hype. The goal is clarity before any bigger commitment.
+                Practical orientation for people and small teams still getting
+                started — so you understand how AI works before committing to
+                tools or projects.
               </p>
             </div>
 

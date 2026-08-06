@@ -52,6 +52,7 @@ const aiServices = [
       "Knowledge transfer",
       "Team enablement for independent operation",
     ],
+    note: "For orientation before projects, see AI Education.",
     icon: Wrench,
   },
 ];
@@ -107,7 +108,20 @@ export default function AIServices() {
               </ul>
               {service.note && (
                 <p className="text-xs text-slate-500 italic border-t border-slate-100 pt-3">
-                  {service.note}
+                  {service.id === "implementation-enablement" ? (
+                    <>
+                      For orientation before projects, see{" "}
+                      <Link
+                        href="/services/education"
+                        className="text-accent-dark not-italic font-medium underline underline-offset-2 hover:text-slate-800"
+                      >
+                        AI Education
+                      </Link>
+                      .
+                    </>
+                  ) : (
+                    service.note
+                  )}
                 </p>
               )}
             </div>

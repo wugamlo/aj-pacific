@@ -13,7 +13,7 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "AJ Pacific | Your Partner in AI & Finance",
   description:
-    "Practical AI consulting and controlling expertise from Hong Kong. Opportunity assessment, strategy, automation, and hands-on implementation.",
+    "Practical AI education, consulting, and controlling from Hong Kong. Orientation, opportunity assessment, automation, and financial clarity for small and mid-sized organisations.",
 };
 
 // Dynamically import ChatWidget with no SSR to prevent chunk loading issues
@@ -50,9 +50,18 @@ export default function RootLayout({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </Link>
-              {/* Dropdown Menu — AI first */}
+              {/* Dropdown Menu — Education → Consulting → Controlling */}
               <div className="absolute top-full left-0 mt-1 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top">
                 <div className="glass py-2 shadow-xl">
+                  <Link
+                    href="/services/education"
+                    className="block px-4 py-3 text-sm text-slate-700 hover:bg-brand/10 hover:text-brand transition-colors"
+                  >
+                    <div className="font-medium">AI Education</div>
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      Practical orientation before you act
+                    </div>
+                  </Link>
                   <Link
                     href="/services/ai"
                     className="block px-4 py-3 text-sm text-slate-700 hover:bg-brand/10 hover:text-brand transition-colors"
