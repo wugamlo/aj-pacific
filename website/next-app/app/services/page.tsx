@@ -48,8 +48,16 @@ export default function Services() {
           Our Services
         </h1>
         <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-lg">
-          Two complementary practices under one partnership: practical AI and
-          financial controlling. Choose a path to see how we work in detail.
+          We offer two complementary practices: practical AI and financial
+          controlling.
+        </p>
+        <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-lg mt-3">
+          Both are aimed at small and mid-sized companies that want clear
+          prioritisation and workable solutions rather than large transformation
+          programmes.
+        </p>
+        <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed text-base mt-3">
+          Choose a path below to see how we work in more detail.
         </p>
       </div>
 

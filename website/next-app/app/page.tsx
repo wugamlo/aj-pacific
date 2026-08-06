@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bot, Briefcase, Handshake } from "lucide-react";
+import { Bot, Compass, LineChart } from "lucide-react";
 
 export default function Home() {
   return (
@@ -27,10 +27,11 @@ export default function Home() {
                 <span className="text-brand">Finance</span>
               </h1>
               <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">
-                Practical AI and financial controlling — from clear
-                prioritisation to working systems.
+                Practical AI and financial controlling for small and mid-sized
+                companies.
                 <br className="hidden sm:block" />
-                We work alongside you, not as distant consultants.
+                We help you move from interest to working solutions — clearly
+                and step by step.
               </p>
 
               {/* Primary Explore banner — high-energy entry point */}
@@ -91,58 +92,65 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Feature Cards — AI first */}
+          {/* Positioning cards — how we work, not credentials */}
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand to-brand-light flex items-center justify-center mb-4">
+                <Compass className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Clear starting points
+              </h3>
+              <p className="text-slate-600 leading-relaxed">
+                We begin with your actual processes and constraints — not with
+                tools or hype. The goal is clarity before any bigger commitment.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center mb-4">
                 <Bot className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                AI Consulting
+                Practical AI
               </h3>
-              <p className="text-slate-600">
-                From opportunity assessment to working agents and automation —
-                practical AI that improves processes and decision-making.
+              <p className="text-slate-600 leading-relaxed">
+                We focus on useful applications: automation, document
+                intelligence, and simple agents that remove real work. No
+                science projects.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand to-brand-light flex items-center justify-center mb-4">
-                <Briefcase className="w-7 h-7 text-white" />
+                <LineChart className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Finance Expertise
+                Finance understanding included
               </h3>
-              <p className="text-slate-600">
-                25 years in controlling, reporting, and financial strategy —
-                let&apos;s tackle your challenges together.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-brand to-brand-light flex items-center justify-center mb-4">
-                <Handshake className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Personal Partnership
-              </h3>
-              <p className="text-slate-600">
-                We work with you, not for you — building solutions side by side.
+              <p className="text-slate-600 leading-relaxed">
+                Many AI ideas fail because they ignore how the numbers and
+                processes actually work. We bring both perspectives.
               </p>
             </div>
           </div>
 
-          {/* Supporting line — solid surface + darker text for contrast */}
-          <div className="mt-8 max-w-2xl mx-auto bg-white rounded-xl border border-slate-200/80 shadow-sm px-6 py-4">
+          {/* Who we work with + location */}
+          <div className="mt-8 max-w-2xl mx-auto bg-white rounded-xl border border-slate-200/80 shadow-sm px-6 py-5 space-y-3">
             <p className="text-slate-700 text-sm md:text-base leading-relaxed">
-              We help companies move from AI interest to AI results — with clear
-              prioritization, realistic roadmaps, and hands-on implementation.
+              We work with small and mid-sized organisations (and individuals
+              who want a practical starting point). Direct, focused, and
+              realistic about what is achievable.
+            </p>
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Based in Hong Kong. Open to work across Asia and with European
+              partners when useful.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Hong Kong — lighter overlay so the page does not drop into a dark band */}
+      {/* Hong Kong — visual anchor; full location copy lives in supporting block */}
       <div className="relative mt-16 -mx-4">
         <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl">
           <img
