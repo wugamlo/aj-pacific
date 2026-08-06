@@ -237,8 +237,8 @@ export default function ExploreExperience() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Header */}
-      <div className="text-center mb-8">
+      {/* Header — keep lean so the chat is the focus */}
+      <div className="text-center mb-6">
         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
           Explore AI Opportunities
         </h1>
@@ -246,12 +246,6 @@ export default function ExploreExperience() {
           Answer a few questions about how work happens in your organisation.
           In a couple of minutes you&apos;ll get concrete, practical AI
           opportunity ideas — ready to discuss or take further.
-        </p>
-        <p className="text-xs text-slate-500 mt-3 max-w-xl mx-auto">
-          This exploration is for discovery only. Conversation turns are not
-          stored permanently on our servers. You can copy the summary or book a
-          call when you are ready. Indicative only — not a full Opportunity
-          Scan.
         </p>
       </div>
 
@@ -315,16 +309,36 @@ export default function ExploreExperience() {
 
       {phase === "interview" && (
         <>
-          {/* Chat panel */}
-          <div className="glass overflow-hidden flex flex-col mb-4">
-            <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between bg-white">
-              <span className="text-sm font-semibold text-slate-800">
-                Opportunity Guide
-              </span>
+          {/* Chat panel — primary visual focus of the page */}
+          <div className="relative overflow-hidden flex flex-col mb-4 rounded-2xl border-2 border-brand/30 bg-white shadow-2xl shadow-brand/10 ring-1 ring-brand/10">
+            <div className="px-4 py-3.5 border-b border-brand/15 flex items-center justify-between bg-gradient-to-r from-brand-dark via-brand to-brand-light">
+              <div className="flex items-center gap-2.5">
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white"
+                  aria-hidden
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <span className="block text-sm font-bold text-white tracking-tight">
+                    Opportunity Guide
+                  </span>
+                  <span className="block text-[11px] text-white/75">
+                    Guided conversation · practical ideas
+                  </span>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={startOver}
-                className="text-xs text-slate-500 hover:text-brand font-medium px-2 py-1 rounded min-h-[44px] md:min-h-0"
+                className="text-xs text-white/80 hover:text-white font-medium px-2.5 py-1.5 rounded-lg hover:bg-white/15 transition-colors min-h-[44px] md:min-h-0"
               >
                 Start over
               </button>
@@ -332,7 +346,7 @@ export default function ExploreExperience() {
 
             <div
               ref={chatScrollRef}
-              className="h-[min(52vh,420px)] overflow-y-auto overscroll-contain p-4 md:p-5 bg-slate-50 space-y-4"
+              className="h-[min(52vh,420px)] overflow-y-auto overscroll-contain p-4 md:p-5 bg-gradient-to-b from-slate-50 to-white space-y-4"
             >
               {messages.map((msg, index) => (
                 <div
@@ -371,7 +385,7 @@ export default function ExploreExperience() {
 
             {/* Chips */}
             {!isLoading && (
-              <div className="px-4 pt-3 pb-1 border-t border-slate-100 bg-white">
+              <div className="px-4 pt-3 pb-1 border-t border-slate-200/80 bg-white">
                 <p className="text-xs text-slate-400 mb-2">Quick answers (optional)</p>
                 <div className="flex flex-wrap gap-2">
                   {currentStage.chips.map((chip) => (
@@ -389,7 +403,7 @@ export default function ExploreExperience() {
             )}
 
             {/* Input */}
-            <div className="p-4 border-t border-slate-100 bg-white">
+            <div className="p-4 border-t border-slate-200/80 bg-white">
               <div className="flex gap-2">
                 <input
                   ref={inputRef}
@@ -404,7 +418,7 @@ export default function ExploreExperience() {
                   }}
                   placeholder={isLoading ? "Thinking…" : "Type your answer…"}
                   disabled={isLoading}
-                  className="flex-grow px-4 py-3 rounded-lg border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all disabled:bg-slate-100 disabled:text-slate-500 min-h-[48px]"
+                  className="flex-grow px-4 py-3 rounded-lg border border-slate-200 focus:border-brand focus:ring-2 focus:ring-brand/25 outline-none transition-all disabled:bg-slate-100 disabled:text-slate-500 min-h-[48px] shadow-sm"
                   style={{ backgroundColor: "#ffffff", color: "#1f2937" }}
                   aria-label="Your answer"
                 />
@@ -412,7 +426,7 @@ export default function ExploreExperience() {
                   type="button"
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || isLoading}
-                  className="bg-brand hover:bg-brand-dark disabled:bg-slate-300 text-white px-4 py-3 rounded-lg font-medium transition-all shadow-md disabled:cursor-not-allowed min-w-[48px] min-h-[48px] flex items-center justify-center"
+                  className="bg-brand hover:bg-brand-dark disabled:bg-slate-300 text-white px-4 py-3 rounded-lg font-medium transition-all shadow-md shadow-brand/20 disabled:shadow-none disabled:cursor-not-allowed min-w-[48px] min-h-[48px] flex items-center justify-center"
                   aria-label="Send message"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -485,17 +499,25 @@ export default function ExploreExperience() {
         </div>
       )}
 
-      <p className="text-center text-xs text-slate-400">
-        Prefer a human conversation?{" "}
-        <Link href="/contact" className="text-brand hover:underline">
-          Contact us
-        </Link>{" "}
-        or learn about our{" "}
-        <Link href="/services/ai" className="text-brand hover:underline">
-          AI consulting services
-        </Link>
-        .
-      </p>
+      <div className="mt-8 pt-6 border-t border-slate-200/80 space-y-3">
+        <p className="text-center text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
+          This exploration is for discovery only. Conversation turns are not
+          stored permanently on our servers. You can copy the summary or book a
+          call when you are ready. Indicative only — not a full Opportunity
+          Scan.
+        </p>
+        <p className="text-center text-xs text-slate-400">
+          Prefer a human conversation?{" "}
+          <Link href="/contact" className="text-brand hover:underline">
+            Contact us
+          </Link>{" "}
+          or learn about our{" "}
+          <Link href="/services/ai" className="text-brand hover:underline">
+            AI consulting services
+          </Link>
+          .
+        </p>
+      </div>
     </div>
   );
 }

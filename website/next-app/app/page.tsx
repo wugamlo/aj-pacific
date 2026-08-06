@@ -33,38 +33,62 @@ export default function Home() {
                 We work alongside you, not as distant consultants.
               </p>
 
-              <div className="flex flex-col items-center gap-3">
-                <Link
-                  href="/explore"
-                  className="bg-brand text-white px-8 py-4 rounded-xl shadow-lg font-bold hover:bg-brand-dark hover:shadow-xl hover:scale-105 transition-all text-base md:text-lg"
-                >
-                  Explore AI opportunities in 3 minutes
-                </Link>
-                <p className="text-sm text-slate-500 max-w-md">
-                  A short guided conversation that surfaces practical ideas for
-                  your processes. No signup required.
-                </p>
-                <Link
-                  href="/services"
-                  className="mt-1 text-slate-700 font-semibold hover:text-brand transition-colors underline-offset-4 hover:underline"
-                >
-                  View our services
-                </Link>
-              </div>
-            </div>
-          </div>
+              {/* Primary Explore banner — high-energy entry point */}
+              <Link
+                href="/explore"
+                className="group relative block w-full max-w-2xl mx-auto overflow-hidden rounded-2xl bg-gradient-to-r from-brand-dark via-brand to-brand-light p-[1px] shadow-xl shadow-brand/25 hover:shadow-2xl hover:shadow-brand/35 hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="relative rounded-[15px] bg-gradient-to-br from-brand-dark via-brand to-[#00b85c] px-6 py-5 md:px-8 md:py-6 text-left">
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-30"
+                    aria-hidden
+                    style={{
+                      background:
+                        "radial-gradient(ellipse 80% 120% at 100% 0%, rgba(255,255,255,0.35) 0%, transparent 55%)",
+                    }}
+                  />
+                  <div className="relative flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.14em] text-white/75 mb-1">
+                        Free · No signup · ~3 min
+                      </p>
+                      <p className="text-lg md:text-xl font-bold text-white leading-snug">
+                        Explore AI opportunities in 3 minutes
+                      </p>
+                      <p className="mt-1.5 text-sm text-white/85 leading-relaxed max-w-md">
+                        A short guided conversation that surfaces practical ideas
+                        for your processes.
+                      </p>
+                    </div>
+                    <span
+                      className="shrink-0 flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white group-hover:bg-white group-hover:text-brand transition-colors"
+                      aria-hidden
+                    >
+                      <svg
+                        className="w-6 h-6 group-hover:translate-x-0.5 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
 
-          {/* Opportunity Guide callout */}
-          <div className="mb-8 max-w-2xl mx-auto bg-white rounded-xl border border-brand/20 shadow-md px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
-            <p className="text-slate-700 text-sm md:text-base leading-relaxed">
-              Curious where AI could actually help in your company?
-            </p>
-            <Link
-              href="/explore"
-              className="shrink-0 inline-flex items-center justify-center bg-brand/10 text-brand px-5 py-2.5 rounded-lg font-bold hover:bg-brand hover:text-white transition-all min-h-[44px]"
-            >
-              Try the Opportunity Guide
-            </Link>
+              <Link
+                href="/services"
+                className="mt-5 inline-block text-slate-700 font-semibold hover:text-brand transition-colors underline-offset-4 hover:underline"
+              >
+                View our services
+              </Link>
+            </div>
           </div>
 
           {/* Feature Cards — AI first */}
