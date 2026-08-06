@@ -9,16 +9,17 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/site";
-import OpportunitiesHeroGraphic from "@/components/opportunities/OpportunitiesHeroGraphic";
+import WhereAiHelpsHeroGraphic from "@/components/where-ai-helps/WhereAiHelpsHeroGraphic";
 
 export const metadata = pageMetadata({
-  title: "Example opportunities",
+  title: "Where practical AI helps",
   description:
-    "Illustrative examples of everyday process friction where practical AI can help smaller organisations — documents, email, knowledge, meetings, reporting, and routine checks.",
-  path: "/services/ai/opportunities",
+    "Illustrative situations of everyday process friction where practical AI can help smaller organisations — documents, email, knowledge, meetings, reporting, and routine checks.",
+  path: "/services/ai/where-ai-helps",
 });
 
-type OpportunityExample = {
+/** Static illustrative situations (not personalised recommendations). */
+type Situation = {
   id: string;
   title: string;
   situation: string;
@@ -28,7 +29,7 @@ type OpportunityExample = {
   icon: LucideIcon;
 };
 
-const examples: OpportunityExample[] = [
+const situations: Situation[] = [
   {
     id: "documents-versions",
     title: "Documents and versions",
@@ -108,7 +109,7 @@ const examples: OpportunityExample[] = [
   },
 ];
 
-export default function ExampleOpportunitiesPage() {
+export default function WhereAiHelpsPage() {
   return (
     <div className="py-12">
       {/* Hero */}
@@ -117,38 +118,39 @@ export default function ExampleOpportunitiesPage() {
           AI Consulting
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-          Example opportunities
+          Where practical AI helps
         </h1>
         <div className="flex justify-center mb-8" aria-hidden>
-          <OpportunitiesHeroGraphic className="w-full max-w-md h-auto opacity-95" />
+          <WhereAiHelpsHeroGraphic className="w-full max-w-md h-auto opacity-95" />
         </div>
         <div className="space-y-3 text-lg text-slate-600 leading-relaxed text-left sm:text-center">
           <p>
-            These are realistic examples of everyday process friction where
-            practical AI can help — especially in smaller organisations.
+            Realistic situations of everyday process friction where practical AI
+            can help — especially in smaller organisations.
           </p>
           <p>
             They are{" "}
             <span className="font-medium text-slate-800">
               illustrative only
             </span>
-            , not case studies of our projects.
+            , not case studies of our projects, and not a personalised
+            recommendation for your organisation.
           </p>
           <p>
             Every organisation is different; the aim is to show the kinds of
-            opportunities that are often worth exploring.
+            situations that are often worth exploring further.
           </p>
         </div>
       </div>
 
-      {/* Example cards */}
+      {/* Situation cards */}
       <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {examples.map((example) => {
-          const Icon = example.icon;
+        {situations.map((item) => {
+          const Icon = item.icon;
           return (
             <article
-              key={example.id}
-              id={example.id}
+              key={item.id}
+              id={item.id}
               className="glass p-6 md:p-8 flex flex-col h-full hover:shadow-xl transition-shadow duration-300"
             >
               <div className="flex items-start gap-4 mb-5">
@@ -156,7 +158,7 @@ export default function ExampleOpportunitiesPage() {
                   <Icon className="w-6 h-6" aria-hidden />
                 </div>
                 <h2 className="text-xl font-bold text-slate-900 leading-snug pt-1">
-                  {example.title}
+                  {item.title}
                 </h2>
               </div>
 
@@ -165,19 +167,19 @@ export default function ExampleOpportunitiesPage() {
                   <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">
                     Common situation
                   </h3>
-                  <p className="text-slate-700">{example.situation}</p>
+                  <p className="text-slate-700">{item.situation}</p>
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">
                     What creates friction
                   </h3>
-                  <p className="text-slate-700">{example.friction}</p>
+                  <p className="text-slate-700">{item.friction}</p>
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wide text-brand mb-1.5">
                     A practical AI angle
                   </h3>
-                  <p className="text-slate-700">{example.aiAngle}</p>
+                  <p className="text-slate-700">{item.aiAngle}</p>
                 </div>
               </div>
 
@@ -185,7 +187,7 @@ export default function ExampleOpportunitiesPage() {
                 <span className="not-italic font-medium text-slate-600">
                   What this is not:{" "}
                 </span>
-                {example.notThis}
+                {item.notThis}
               </p>
             </article>
           );
@@ -196,7 +198,7 @@ export default function ExampleOpportunitiesPage() {
       <p className="text-center text-slate-500 text-sm max-w-2xl mx-auto mb-10 leading-relaxed">
         We start with your process and goals — not with a tool recommendation.
         Sometimes the best first step is clearer ownership or a simpler
-        workflow, not AI.
+        workflow, not AI. For ideas tailored to what you tell us, use Explore.
       </p>
 
       {/* CTAs */}
@@ -205,7 +207,7 @@ export default function ExampleOpportunitiesPage() {
           See what might apply to you
         </h2>
         <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Prefer a short guided conversation for your own processes, or a
+          Prefer a short guided conversation about your own processes, or a
           focused call with us? Both are free of obligation.
         </p>
         <div className="flex flex-wrap justify-center gap-4">

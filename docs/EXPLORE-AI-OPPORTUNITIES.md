@@ -5,6 +5,21 @@
 
 ---
 
+## Naming (product vocabulary)
+
+Keep these distinct so visitors (and the codebase) do not overload “examples” / “opportunities”:
+
+| Surface | Public name | Role |
+|---------|-------------|------|
+| `/explore` | **Explore AI Opportunities** | Personalised guided chat → opportunity summary cards |
+| `/services/ai/where-ai-helps` | **Where practical AI helps** | Static illustrative situations (not personalised) |
+| Explore secondary UI | **Sample conversations** | Pre-filled demo chats inside Explore only |
+| Offer | **Opportunity Scan / Call** | Paid/entry services |
+
+Retired path: `/services/ai/opportunities` → **308 permanent redirect** to `/services/ai/where-ai-helps`.
+
+---
+
 ## Goal
 
 Add a simple guided AI conversation that helps visitors explore possible AI opportunities in their processes. At the end they see a structured summary (2–4 opportunity areas) and can copy it or book an Opportunity Call.
@@ -74,7 +89,8 @@ Browser  /explore
 | `website/next-app/components/explore/ExploreExperience.tsx` | Main client UI / flow |
 | `website/next-app/components/explore/StageProgress.tsx` | Progress steps |
 | `website/next-app/components/explore/SummaryCards.tsx` | Cards + plain-text copy helper |
-| `website/next-app/components/explore/types.ts` | Types, stages, chips, opening message |
+| `website/next-app/components/explore/types.ts` | Types, stages, chips, sample conversations, opening message |
+| `website/next-app/app/services/ai/where-ai-helps/page.tsx` | Static “Where practical AI helps” situations (separate product surface) |
 | `website/next-app/components/ChatWidget.tsx` | Hides FAB when `pathname === '/explore'` |
 
 ### Summary data shape

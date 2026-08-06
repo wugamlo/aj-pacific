@@ -44,8 +44,8 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/services/ai/opportunities" className="text-slate-400 hover:text-brand-light transition-colors">
-                                    Example Opportunities
+                                <Link href="/services/ai/where-ai-helps" className="text-slate-400 hover:text-brand-light transition-colors">
+                                    Where AI helps
                                 </Link>
                             </li>
                             <li>

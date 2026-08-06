@@ -73,8 +73,12 @@ export const MIN_ANSWERS_FOR_SUMMARY = 3;
 export const OPENING_MESSAGE =
   "I'll help you explore where AI could create value in your processes — this is a short guided conversation, not a permanent record.\n\nTo start: what kind of organization are you in, and what is your role?";
 
-/** Pre-scripted example journeys — load into chat so visitors can try "Generate summary" immediately. */
-export interface ExampleJourney {
+/**
+ * Pre-scripted sample conversations — load into Explore chat so visitors can
+ * try "Generate summary" without typing. Distinct from the static
+ * /services/ai/where-ai-helps situations page.
+ */
+export interface SampleConversation {
   id: string;
   label: string;
   description: string;
@@ -82,7 +86,7 @@ export interface ExampleJourney {
   messages: ChatMessage[];
 }
 
-export const EXAMPLE_JOURNEYS: ExampleJourney[] = [
+export const SAMPLE_CONVERSATIONS: SampleConversation[] = [
   {
     id: "finance-controlling",
     label: "Finance & Controlling",

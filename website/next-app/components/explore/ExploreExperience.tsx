@@ -6,8 +6,8 @@ import StageProgress from "./StageProgress";
 import SummaryCards, { summaryToPlainText } from "./SummaryCards";
 import {
   ChatMessage,
-  EXAMPLE_JOURNEYS,
-  ExampleJourney,
+  SAMPLE_CONVERSATIONS,
+  SampleConversation,
   EXPLORE_STAGES,
   MIN_ANSWERS_FOR_SUMMARY,
   OPENING_MESSAGE,
@@ -26,10 +26,10 @@ export default function ExploreExperience() {
   const [phase, setPhase] = useState<Phase>("interview");
   const [summary, setSummary] = useState<OpportunitySummary | null>(null);
   const [copied, setCopied] = useState(false);
-  /** Which example journey is loaded (if any); null when free-form or reset. */
-  const [activeExampleId, setActiveExampleId] = useState<string | null>(null);
-  /** Examples stay collapsed so the chat is the default path. */
-  const [examplesOpen, setExamplesOpen] = useState(false);
+  /** Which sample conversation is loaded (if any); null when free-form or reset. */
+  const [activeSampleId, setActiveSampleId] = useState<string | null>(null);
+  /** Sample conversations stay collapsed so the chat is the default path. */
+  const [samplesOpen, setSamplesOpen] = useState(false);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   /** Avoid scrolling the chat (or page) until the visitor has engaged. */
@@ -40,9 +40,9 @@ export default function ExploreExperience() {
   const currentStage = EXPLORE_STAGES[stageIndex];
   const canSummarize =
     userAnswerCount >= MIN_ANSWERS_FOR_SUMMARY && !isLoading && phase === "interview";
-  /** Show example cards until the visitor starts typing or picks a journey. */
-  const showExamples =
-    phase === "interview" && !isLoading && userAnswerCount === 0 && !activeExampleId;
+  /** Show sample cards until the visitor starts typing or picks a sample. */
+  const showSamples =
+    phase === "interview" && !isLoading && userAnswerCount === 0 && !activeSampleId;
 
   /** Scroll only the chat panel — never the page window (scrollIntoView was pulling the whole page). */
   const scrollChatToBottom = (behavior: ScrollBehavior = "smooth") => {
@@ -128,7 +128,7 @@ export default function ExploreExperience() {
     if (!content || isLoading || phase !== "interview") return;
 
     hasEngagedRef.current = true;
-    setActiveExampleId(null);
+    setActiveSampleId(null);
     setError(null);
     setIsLoading(true);
 
@@ -193,12 +193,12 @@ export default function ExploreExperience() {
     }
   };
 
-  const loadExampleJourney = (journey: ExampleJourney) => {
+  const loadSampleConversation = (sample: SampleConversation) => {
     if (isLoading || phase !== "interview") return;
 
     hasEngagedRef.current = true;
-    setActiveExampleId(journey.id);
-    setMessages(journey.messages);
+    setActiveSampleId(sample.id);
+    setMessages(sample.messages);
     setInput("");
     setError(null);
     setSummary(null);
@@ -211,8 +211,8 @@ export default function ExploreExperience() {
 
   const startOver = () => {
     hasEngagedRef.current = false;
-    setActiveExampleId(null);
-    setExamplesOpen(false);
+    setActiveSampleId(null);
+    setSamplesOpen(false);
     setMessages([{ role: "assistant", content: OPENING_MESSAGE }]);
     setInput("");
     setError(null);
@@ -251,19 +251,19 @@ export default function ExploreExperience() {
           opportunity ideas — ready to discuss or take further.
         </p>
         <p className="mt-3 text-sm text-slate-500">
-          Prefer to browse examples first?{" "}
+          Prefer to read common situations first?{" "}
           <Link
-            href="/services/ai/opportunities"
+            href="/services/ai/where-ai-helps"
             className="text-brand font-medium underline underline-offset-2 hover:text-brand-dark"
           >
-            See example opportunities
+            Where practical AI helps
           </Link>
         </p>
       </div>
 
-      {activeExampleId && phase === "interview" && (
+      {activeSampleId && phase === "interview" && (
         <p className="text-xs text-center text-slate-500 mb-4">
-          Example loaded — hit{" "}
+          Sample conversation loaded — hit{" "}
           <span className="font-semibold text-slate-700">Generate summary</span>{" "}
           to see opportunity cards, or keep chatting to refine.
         </p>
@@ -416,23 +416,25 @@ export default function ExploreExperience() {
             </div>
           </div>
 
-          {/* Examples: secondary path — collapsed so chat stays primary */}
-          {showExamples && (
+          {/* Sample conversations: secondary path — collapsed so chat stays primary */}
+          {showSamples && (
             <div className="mb-4 rounded-xl border border-slate-200/90 bg-slate-50/80">
               <button
                 type="button"
-                onClick={() => setExamplesOpen((open) => !open)}
+                onClick={() => setSamplesOpen((open) => !open)}
                 className="w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left min-h-[44px] hover:bg-slate-100/80 transition-colors rounded-xl"
-                aria-expanded={examplesOpen}
-                aria-controls="example-journeys-panel"
+                aria-expanded={samplesOpen}
+                aria-controls="sample-conversations-panel"
               >
                 <span className="text-sm text-slate-600">
                   <span className="text-slate-500">Not sure where to start?</span>{" "}
-                  <span className="font-medium text-slate-800">Try an example</span>
+                  <span className="font-medium text-slate-800">
+                    Try a sample conversation
+                  </span>
                 </span>
                 <svg
                   className={`w-4 h-4 shrink-0 text-slate-400 transition-transform ${
-                    examplesOpen ? "rotate-180" : ""
+                    samplesOpen ? "rotate-180" : ""
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -448,28 +450,28 @@ export default function ExploreExperience() {
                 </svg>
               </button>
 
-              {examplesOpen && (
+              {samplesOpen && (
                 <div
-                  id="example-journeys-panel"
+                  id="sample-conversations-panel"
                   className="px-3 pb-3 pt-0 border-t border-slate-200/70"
                 >
                   <p className="text-xs text-slate-500 px-1 pt-2.5 pb-2">
                     Pre-fills a short conversation so you can generate a summary
-                    without typing. Illustrative only.
+                    without typing. Illustrative only — not your organisation.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-2">
-                    {EXAMPLE_JOURNEYS.map((journey) => (
+                    {SAMPLE_CONVERSATIONS.map((sample) => (
                       <button
-                        key={journey.id}
+                        key={sample.id}
                         type="button"
-                        onClick={() => loadExampleJourney(journey)}
+                        onClick={() => loadSampleConversation(sample)}
                         className="flex-1 text-left rounded-lg border border-slate-200 bg-white px-3 py-2.5 hover:border-brand/40 hover:bg-brand/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 min-h-[44px]"
                       >
                         <span className="block text-sm font-semibold text-brand">
-                          {journey.label}
+                          {sample.label}
                         </span>
                         <span className="block text-xs text-slate-500 mt-0.5 leading-snug">
-                          {journey.description}
+                          {sample.description}
                         </span>
                       </button>
                     ))}

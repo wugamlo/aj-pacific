@@ -23,6 +23,17 @@ const nextConfig = {
     return `build-${Date.now()}`;
   },
 
+  // Retired path: early /services/ai/opportunities → permanent home
+  async redirects() {
+    return [
+      {
+        source: "/services/ai/opportunities",
+        destination: "/services/ai/where-ai-helps",
+        permanent: true,
+      },
+    ];
+  },
+
   // Configure headers for proper cache control
   async headers() {
     return [

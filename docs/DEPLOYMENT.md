@@ -31,6 +31,7 @@ cp docs/OPS.local.example.md docs/OPS.local.md   # then edit
 |-----|---------|
 | https://dev.aj-pacific.com | Primary Next.js site |
 | https://dev.aj-pacific.com/explore | AI Opportunity Exploration |
+| https://dev.aj-pacific.com/services/ai/where-ai-helps | Where practical AI helps |
 
 ---
 

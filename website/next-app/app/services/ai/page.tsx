@@ -175,17 +175,16 @@ export default function AIServices() {
         step — sometimes more valuable than any immediate automation.
       </p>
 
-      {/* Bridge to illustrative examples */}
+      {/* Bridge to illustrative situations */}
       <div className="glass px-6 py-5 md:px-8 md:py-6 mb-12 max-w-3xl mx-auto text-center">
         <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-3">
-          Curious what practical AI opportunities often look like in smaller
-          organisations?
+          Curious what practical AI often looks like in smaller organisations?
         </p>
         <Link
-          href="/services/ai/opportunities"
+          href="/services/ai/where-ai-helps"
           className="inline-flex items-center gap-1.5 text-brand font-semibold hover:text-brand-dark underline underline-offset-2"
         >
-          See example opportunities
+          Where practical AI helps
           <span aria-hidden>→</span>
         </Link>
       </div>

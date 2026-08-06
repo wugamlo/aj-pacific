@@ -72,6 +72,7 @@ npm run dev
 |-----|---------|
 | https://dev.aj-pacific.com | Primary Next.js site |
 | https://dev.aj-pacific.com/explore | AI Opportunity Exploration (guided flow) |
+| https://dev.aj-pacific.com/services/ai/where-ai-helps | Where practical AI helps (illustrative situations) |
 
 ## Recent content work (Aug 2026)
 
