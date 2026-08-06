@@ -250,6 +250,15 @@ export default function ExploreExperience() {
           In a couple of minutes you&apos;ll get concrete, practical AI
           opportunity ideas — ready to discuss or take further.
         </p>
+        <p className="mt-3 text-sm text-slate-500">
+          Prefer to browse examples first?{" "}
+          <Link
+            href="/services/ai/opportunities"
+            className="text-brand font-medium underline underline-offset-2 hover:text-brand-dark"
+          >
+            See example opportunities
+          </Link>
+        </p>
       </div>
 
       {activeExampleId && phase === "interview" && (

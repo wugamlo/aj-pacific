@@ -170,10 +170,25 @@ export default function AIServices() {
         })}
       </div>
 
-      <p className="text-center text-slate-500 text-sm max-w-2xl mx-auto mb-12 leading-relaxed">
+      <p className="text-center text-slate-500 text-sm max-w-2xl mx-auto mb-8 leading-relaxed">
         A clear understanding of the process is often the most important first
         step — sometimes more valuable than any immediate automation.
       </p>
+
+      {/* Bridge to illustrative examples */}
+      <div className="glass px-6 py-5 md:px-8 md:py-6 mb-12 max-w-3xl mx-auto text-center">
+        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-3">
+          Curious what practical AI opportunities often look like in smaller
+          organisations?
+        </p>
+        <Link
+          href="/services/ai/opportunities"
+          className="inline-flex items-center gap-1.5 text-brand font-semibold hover:text-brand-dark underline underline-offset-2"
+        >
+          See example opportunities
+          <span aria-hidden>→</span>
+        </Link>
+      </div>
 
       {/* Entry offer + CTA */}
       <div className="glass p-8 md:p-12 text-center mb-8 border-l-4 border-brand md:border-l-0">
