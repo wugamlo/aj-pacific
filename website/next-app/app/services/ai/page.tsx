@@ -14,13 +14,14 @@ const aiServices = [
     id: "opportunity-scan",
     title: "AI Opportunity Scan",
     description:
-      "A structured assessment that identifies where AI can create the highest value in your organization.",
+      "A structured assessment that begins with your current processes and only then evaluates where AI can create the highest value.",
     items: [
+      "Understanding of key processes and friction points",
       "Use-case landscape",
       "Benefit / effort evaluation",
       "Prioritized roadmap",
     ],
-    note: "Ideal starting point when you want clarity before investing further.",
+    note: "Ideal starting point when you want clarity before investing further. Sometimes the most valuable outcome is a clearer process — even if the conclusion is that AI is not the right next step yet.",
     icon: Search,
   },
   {
@@ -69,23 +70,55 @@ export default function AIServices() {
   return (
     <div className="py-12">
       {/* Hero */}
-      <div
-        className="text-center mb-16"
-      >
+      <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
           AI Consulting
         </h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          Practical AI solutions focused on business value. We help you identify
-          where AI creates the highest impact, design a realistic strategy, and
-          implement working systems — with particular strength in process
-          automation, document intelligence, and custom agents.
+          Practical AI solutions focused on business value. We start by
+          understanding your actual processes and goals — not with tools or
+          technology recommendations. Only once the work is clear do we identify
+          where AI can create real leverage, design a realistic approach, and
+          implement working systems. Particular strength in process automation,
+          document intelligence, and custom agents.
+        </p>
+      </div>
+
+      {/* European Collaboration — prominent, process-first partnership */}
+      <div className="glass px-6 py-6 md:px-8 md:py-7 mb-12 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-slate-900 mb-3">
+          European Collaboration
+        </h2>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
+          We work closely with our European partner{" "}
+          <span className="font-medium text-slate-800">SAS Beratung GmbH</span>{" "}
+          in Germany (
+          <a
+            href="https://sas-ki-beratung.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand hover:text-brand-dark underline underline-offset-2"
+          >
+            sas-ki-beratung.com
+          </a>
+          ).
+        </p>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
+          Together we combine practical AI implementation and financial
+          expertise with deep process analysis and governance experience. This
+          allows us to support both local initiatives in Asia and cross-border
+          projects that benefit from European process discipline and regulatory
+          understanding.
+        </p>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed">
+          The partnership is especially valuable when clear process
+          understanding needs to come before any technology decision.
         </p>
       </div>
 
       {/* Four service cards */}
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {aiServices.map((service, index) => {
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        {aiServices.map((service) => {
           const Icon = service.icon;
           return (
             <div
@@ -137,42 +170,25 @@ export default function AIServices() {
         })}
       </div>
 
-      {/* Partnership — solid card (no OpenClaw / tool chips) */}
-      <div
-        className="glass px-6 py-5 mb-12"
-      >
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-2">
-          European Collaboration
-        </h3>
-        <p className="text-sm text-slate-600 leading-relaxed">
-          In collaboration with our European partner{" "}
-          <span className="font-medium text-slate-800">SAS Beratung GmbH</span> in
-          Germany (
-          <a
-            href="https://sas-ki-beratung.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand hover:text-brand-dark underline underline-offset-2"
-          >
-            sas-ki-beratung.com
-          </a>
-          ), we combine practical AI implementation and financial expertise with
-          deep process and governance experience. This allows us to support both
-          local and cross-border AI initiatives.
-        </p>
-      </div>
+      <p className="text-center text-slate-500 text-sm max-w-2xl mx-auto mb-12 leading-relaxed">
+        A clear understanding of the process is often the most important first
+        step — sometimes more valuable than any immediate automation.
+      </p>
 
       {/* Entry offer + CTA */}
-      <div
-        className="glass p-8 md:p-12 text-center mb-8 border-l-4 border-brand md:border-l-0"
-      >
+      <div className="glass p-8 md:p-12 text-center mb-8 border-l-4 border-brand md:border-l-0">
         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
           AI Opportunity Call
         </h2>
+        <p className="text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
+          A focused 45–60 minute conversation to explore your current situation
+          and identify potential high-value opportunities. No obligation.
+        </p>
         <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-          A focused 45–60 minute conversation to explore your current situation and
-          identify potential high-value AI opportunities. No obligation. Designed
-          to give you clarity on next steps.
+          We start with understanding your processes and goals — not with a tool
+          recommendation. The aim is clarity: where friction exists, where AI
+          may help, and where it may not. Pragmatic, independent, and focused on
+          measurable improvement.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
@@ -195,12 +211,6 @@ export default function AIServices() {
           </Link>
         </div>
       </div>
-
-      <p className="text-center text-slate-500 text-sm max-w-xl mx-auto">
-        We start with understanding your processes and goals — not with a tool
-        recommendation. Pragmatic, independent, and focused on measurable
-        improvement.
-      </p>
     </div>
   );
 }

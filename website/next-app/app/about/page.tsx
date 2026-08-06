@@ -143,19 +143,19 @@ export default function About() {
             {[
               {
                 step: "1. Understand",
-                text: "We listen to your goals, constraints, and how you work today",
+                text: "We listen to your goals, constraints, and how work actually happens today — before any discussion of tools or AI.",
               },
               {
                 step: "2. Assess",
-                text: "We identify realistic, high-impact opportunities — not a shopping list of tools",
+                text: "We identify realistic, high-impact opportunities and also where AI is not the right answer.",
               },
               {
                 step: "3. Design",
-                text: "We agree a pragmatic roadmap and clear responsibilities",
+                text: "We agree a pragmatic roadmap and clear responsibilities.",
               },
               {
                 step: "4. Build & Transfer",
-                text: "We implement and enable your team so you can run and extend it",
+                text: "We implement and enable your team so you can run and extend the solution independently.",
               },
             ].map((item) => (
               <li key={item.step} className="flex items-start gap-3">
