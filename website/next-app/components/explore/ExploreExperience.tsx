@@ -22,6 +22,8 @@ export default function ExploreExperience() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  /** True only while the summarize API call is in flight (not chat turns). */
+  const [isSummarizing, setIsSummarizing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [phase, setPhase] = useState<Phase>("interview");
   const [summary, setSummary] = useState<OpportunitySummary | null>(null);
@@ -32,16 +34,24 @@ export default function ExploreExperience() {
   const [samplesOpen, setSamplesOpen] = useState(false);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const summaryCtaRef = useRef<HTMLDivElement>(null);
   /** Avoid scrolling the chat (or page) until the visitor has engaged. */
   const hasEngagedRef = useRef(false);
   /** Track loading→idle so we refocus after the input is re-enabled (not while still disabled). */
   const wasLoadingRef = useRef(false);
+  /** One celebration per unlock cycle (resets on Start over). */
+  const unlockCelebratedRef = useRef(false);
+  /** Plays unlock CSS once when the summary CTA first becomes clickable. */
+  const [celebrateUnlock, setCelebrateUnlock] = useState(false);
 
   const userAnswerCount = messages.filter((m) => m.role === "user").length;
   const stageIndex = Math.min(userAnswerCount, EXPLORE_STAGES.length - 1);
   const currentStage = EXPLORE_STAGES[stageIndex];
-  const canSummarize =
-    userAnswerCount >= MIN_ANSWERS_FOR_SUMMARY && !isLoading && phase === "interview";
+  /** Enough answers to unlock the summary CTA (visual + messaging). */
+  const summaryUnlocked =
+    userAnswerCount >= MIN_ANSWERS_FOR_SUMMARY && phase === "interview";
+  /** Allowed to fire generate (unlocked and not mid-request). */
+  const canSummarize = summaryUnlocked && !isLoading;
   /** Show sample cards until the visitor starts typing or picks a sample. */
   const showSamples =
     phase === "interview" && !isLoading && userAnswerCount === 0 && !activeSampleId;
@@ -72,6 +82,33 @@ export default function ExploreExperience() {
     wasLoadingRef.current = false;
     inputRef.current?.focus({ preventScroll: true });
   }, [isLoading, phase]);
+
+  /**
+   * One-time unlock celebration when Generate summary first becomes clickable.
+   * Fires after the 3rd answer finishes loading (or immediately for samples).
+   * Held long enough for card + button + badge keyframes (~1.6s).
+   */
+  useEffect(() => {
+    if (!canSummarize || unlockCelebratedRef.current) return;
+    unlockCelebratedRef.current = true;
+    setCelebrateUnlock(true);
+
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reduceMotion) {
+      // Soft scroll so the CTA is in view on tall mobile chats.
+      summaryCtaRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+
+    const clearMs = reduceMotion ? 0 : 1700;
+    const timer = window.setTimeout(() => setCelebrateUnlock(false), clearMs);
+    return () => window.clearTimeout(timer);
+  }, [canSummarize]);
 
   const streamChatReply = async (history: ChatMessage[]) => {
     const response = await fetch("/api/explore", {
@@ -179,6 +216,7 @@ export default function ExploreExperience() {
 
     setError(null);
     setIsLoading(true);
+    setIsSummarizing(true);
 
     try {
       const response = await fetch("/api/explore", {
@@ -206,6 +244,7 @@ export default function ExploreExperience() {
       );
     } finally {
       setIsLoading(false);
+      setIsSummarizing(false);
     }
   };
 
@@ -236,6 +275,9 @@ export default function ExploreExperience() {
     setSummary(null);
     setCopied(false);
     setIsLoading(false);
+    setIsSummarizing(false);
+    unlockCelebratedRef.current = false;
+    setCelebrateUnlock(false);
     requestAnimationFrame(() => {
       const el = chatScrollRef.current;
       if (el) el.scrollTop = 0;
@@ -263,8 +305,13 @@ export default function ExploreExperience() {
         </h1>
         <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto">
           Answer a few questions about how work happens in your organisation.
-          In a couple of minutes you&apos;ll get concrete, practical AI
-          opportunity ideas — ready to discuss or take further.
+          After about{" "}
+          <span className="font-semibold text-slate-800">
+            {MIN_ANSWERS_FOR_SUMMARY} answers
+          </span>
+          , <span className="font-semibold text-slate-800">Generate summary</span>{" "}
+          unlocks with concrete, practical AI opportunity ideas — ready to
+          discuss or take further.
         </p>
         <p className="mt-3 text-sm text-slate-500">
           Prefer to read common situations first?{" "}
@@ -497,21 +544,130 @@ export default function ExploreExperience() {
             </div>
           )}
 
-          {/* Generate summary */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
-            <p className="text-sm text-slate-500">
-              {canSummarize
-                ? "Enough context to draft opportunity ideas."
-                : `Answer a few more questions (${userAnswerCount}/${MIN_ANSWERS_FOR_SUMMARY}) to unlock a summary.`}
-            </p>
-            <button
-              type="button"
-              onClick={generateSummary}
-              disabled={!canSummarize}
-              className="inline-flex items-center justify-center bg-brand text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-dark disabled:bg-slate-300 disabled:cursor-not-allowed transition-all min-h-[48px]"
-            >
-              {isLoading ? "Working…" : "Generate summary"}
-            </button>
+          {/* Generate summary — progress + clear lock/unlock states */}
+          <div
+            ref={summaryCtaRef}
+            className={`relative mb-6 rounded-xl border px-4 py-4 transition-colors ${
+              summaryUnlocked
+                ? "border-brand/40 bg-brand/[0.06] shadow-sm shadow-brand/10"
+                : "border-slate-200 bg-slate-50/80"
+            } ${celebrateUnlock ? "animate-summary-unlock-card" : ""}`}
+          >
+            {celebrateUnlock && (
+              <span
+                className="pointer-events-none absolute -top-2.5 right-3 z-10 rounded-full bg-brand px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-md animate-summary-unlock-badge"
+                aria-hidden
+              >
+                Unlocked
+              </span>
+            )}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Summary progress
+                  </span>
+                  <span
+                    className={`text-xs font-bold tabular-nums ${
+                      summaryUnlocked ? "text-brand-dark" : "text-slate-600"
+                    }`}
+                    aria-live="polite"
+                  >
+                    {Math.min(userAnswerCount, MIN_ANSWERS_FOR_SUMMARY)}/
+                    {MIN_ANSWERS_FOR_SUMMARY}
+                  </span>
+                </div>
+
+                {/* Segment progress toward unlock */}
+                <div
+                  className="flex gap-1.5 mb-2"
+                  role="progressbar"
+                  aria-valuenow={Math.min(
+                    userAnswerCount,
+                    MIN_ANSWERS_FOR_SUMMARY
+                  )}
+                  aria-valuemin={0}
+                  aria-valuemax={MIN_ANSWERS_FOR_SUMMARY}
+                  aria-label="Answers toward summary unlock"
+                >
+                  {Array.from({ length: MIN_ANSWERS_FOR_SUMMARY }).map(
+                    (_, i) => {
+                      const filled = i < userAnswerCount;
+                      return (
+                        <span
+                          key={i}
+                          className={`h-2 flex-1 max-w-[4.5rem] rounded-full transition-colors ${
+                            filled ? "bg-brand" : "bg-slate-200"
+                          }`}
+                        />
+                      );
+                    }
+                  )}
+                </div>
+
+                <p
+                  className={`text-sm leading-snug ${
+                    summaryUnlocked
+                      ? "text-brand-dark font-medium"
+                      : "text-slate-600"
+                  }`}
+                  aria-live="polite"
+                >
+                  {summaryUnlocked
+                    ? isSummarizing
+                      ? "Generating your opportunity summary…"
+                      : "Ready — you have enough context. Generate your opportunity summary."
+                    : userAnswerCount === 0
+                      ? `Answer ${MIN_ANSWERS_FOR_SUMMARY} questions to unlock Generate summary.`
+                      : userAnswerCount === MIN_ANSWERS_FOR_SUMMARY - 1
+                        ? "One more answer and Generate summary unlocks."
+                        : `${MIN_ANSWERS_FOR_SUMMARY - userAnswerCount} more answers to unlock Generate summary.`}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={generateSummary}
+                disabled={!canSummarize}
+                aria-disabled={!canSummarize}
+                title={
+                  summaryUnlocked
+                    ? "Generate opportunity summary from this conversation"
+                    : `Answer ${MIN_ANSWERS_FOR_SUMMARY - userAnswerCount} more question${
+                        MIN_ANSWERS_FOR_SUMMARY - userAnswerCount === 1
+                          ? ""
+                          : "s"
+                      } to unlock`
+                }
+                className={`inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all min-h-[48px] shrink-0 ${
+                  summaryUnlocked
+                    ? "bg-brand text-white hover:bg-brand-dark shadow-md shadow-brand/25 ring-2 ring-brand/30 ring-offset-2 disabled:opacity-80 disabled:cursor-wait"
+                    : "bg-slate-200 text-slate-500 cursor-not-allowed"
+                } ${celebrateUnlock && summaryUnlocked ? "animate-summary-unlock-btn" : ""}`}
+              >
+                {!summaryUnlocked && (
+                  <svg
+                    className="w-4 h-4 shrink-0 opacity-80"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                )}
+                {isSummarizing
+                  ? "Working…"
+                  : summaryUnlocked
+                    ? "Generate summary"
+                    : "Generate summary (locked)"}
+              </button>
+            </div>
           </div>
         </>
       )}

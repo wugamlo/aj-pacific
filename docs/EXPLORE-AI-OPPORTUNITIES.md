@@ -37,7 +37,7 @@ Add a simple guided AI conversation that helps visitors explore possible AI oppo
 | Stage progress UI | Done | Step indicator + stage hints |
 | Free-text answers | Done | Streaming replies via Venice |
 | Suggested answer chips | Done | Stage-specific quick replies |
-| Generate summary | Done | Unlocks after **3** user answers |
+| Generate summary | Done | Unlocks after **3** user answers; progress bar + locked/ready CTA states make the gate explicit |
 | Summary as structured data | Done | JSON → opportunity cards |
 | Summary cards UI | Done | Context, 2–4 opportunities, impact/effort, next step |
 | Copy summary | Done | Clipboard plain-text export |
