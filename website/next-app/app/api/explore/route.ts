@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const INTERVIEW_STAGES = ["context", "processes", "priority"] as const;
+type InterviewStage = (typeof INTERVIEW_STAGES)[number];
+
+const STAGE_GUIDANCE: Record<InterviewStage, string> = {
+  context:
+    "Ask about their organisation and role (industry, size, or how they sit in the work) — unless the last message already covered that, then move to processes.",
+  processes:
+    "Ask about processes that are manual, slow, document-heavy, or error-prone — unless they already described those, then move to priority outcomes.",
+  priority:
+    "Ask what outcome matters most (time, quality, insight, scale, customer experience). If they already said that, invite them to click Generate summary or add one optional constraint.",
+};
+
 const INTERVIEW_SYSTEM_PROMPT = `You are the AJ Pacific AI Opportunity Guide — a practical interviewer helping visitors explore where AI could create business value. You are NOT a general chatbot about the website.
 
 ## Context about AJ Pacific (use sparingly)
@@ -12,15 +24,12 @@ const INTERVIEW_SYSTEM_PROMPT = `You are the AJ Pacific AI Opportunity Guide —
 ## Interview style (strict)
 1. Ask **exactly one** clear question per reply.
 2. Keep replies short: 2–4 sentences max before the question.
-3. Guide through these themes (in order, skip if already answered):
-   - Organization context (industry, size/role if useful)
-   - Processes that are manual, slow, document-heavy, or error-prone
-   - Priority outcomes (time, quality, insight, scale, customer experience)
-   - Constraints if mentioned (data readiness, team capacity) — optional
-4. Do **not** dump a full service catalog. Do **not** recommend specific vendors.
-5. Stay practical and professional — no AI hype.
-6. After you have enough signal for 2–4 opportunity areas (typically after 3+ substantive user answers), say you have enough to draft opportunity ideas and invite them to click **Generate summary**. Do not invent the full multi-card summary in chat unless they clearly ask for ideas immediately.
-7. If the user goes off-topic, gently steer back to processes and opportunities.
+3. Stay on the current stage (injected below). Skip a theme only if the visitor already answered it.
+4. If the last user message is a short label or chip (a few words, no sentence), treat it as a hint — acknowledge it and ask one concrete follow-up in that area. Do not restart from scratch or ask them to restate what the chip already implied.
+5. Do **not** dump a full service catalog. Do **not** recommend specific vendors.
+6. Stay practical and professional — no AI hype.
+7. After you have enough signal for 2–4 opportunity areas (typically after 3+ user answers), say you have enough to draft opportunity ideas and invite them to click **Generate summary**. Do not invent the full multi-card summary in chat unless they clearly ask for ideas immediately.
+8. If the user goes off-topic, gently steer back to processes and opportunities.
 
 ## Language
 - English by default. Match the visitor if they write in another language.`;
@@ -28,12 +37,13 @@ const INTERVIEW_SYSTEM_PROMPT = `You are the AJ Pacific AI Opportunity Guide —
 const SUMMARY_SYSTEM_PROMPT = `You are the AJ Pacific AI Opportunity Guide. Based on the conversation, produce a structured summary of realistic AI opportunity areas.
 
 ## Rules
-- Base ideas only on what the user said. Do not invent company facts.
-- Produce 2–4 opportunities (prefer 3 when possible).
-- Each opportunity must be practical (process-level), not vague "use AI more".
+- Produce **2–4 opportunities** (prefer 3). Always at least 2 — never return a single card.
+- Ground ideas in what the visitor said. Do not invent company facts (name, systems, headcount, tools) they did not mention.
+- If the transcript is thin (short chip-like answers), still give 2–3 practical opportunities consistent with those hints. Put uncertainty in companyContext (e.g. that detail is limited) rather than fabricating a full company story.
+- Opportunities can cover any practical process where AI might help. Do not restrict ideas to a fixed service list. Keep them concrete (a real process), not vague "use AI more" or "AI transformation".
+- Do not recommend specific vendors or name underlying models. No fake case studies.
 - impact and effort must be exactly one of: "low" | "medium" | "high"
 - suggestedNextStep should point toward a short AI Opportunity Call / Opportunity Scan with AJ Pacific — no pressure, no pricing.
-- Never mention underlying models. No fake case studies.
 
 ## Output format (strict)
 Return ONLY valid JSON matching this schema, with no markdown fences and no extra text:
@@ -59,10 +69,12 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as {
       messages?: Message[];
       action?: "chat" | "summarize";
+      stage?: string;
     };
 
     const messages = Array.isArray(body.messages) ? body.messages : [];
     const action = body.action === "summarize" ? "summarize" : "chat";
+    const stage = parseInterviewStage(body.stage);
 
     const apiKey = process.env.VENICE_API_KEY;
     const baseUrl = process.env.VENICE_BASE_URL || "https://api.venice.ai/api/v1";
@@ -84,14 +96,32 @@ export async function POST(req: NextRequest) {
       return handleSummarize(apiKey, baseUrl, recent);
     }
 
-    return handleChat(apiKey, baseUrl, recent);
+    return handleChat(apiKey, baseUrl, recent, stage);
   } catch (error) {
     console.error("Explore API error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-async function handleChat(apiKey: string, baseUrl: string, recent: Message[]) {
+function parseInterviewStage(value: unknown): InterviewStage | undefined {
+  if (typeof value !== "string") return undefined;
+  return INTERVIEW_STAGES.find((s) => s === value);
+}
+
+function interviewSystemPrompt(stage?: InterviewStage): string {
+  if (!stage) return INTERVIEW_SYSTEM_PROMPT;
+  return `${INTERVIEW_SYSTEM_PROMPT}
+
+## Current stage: ${stage}
+${STAGE_GUIDANCE[stage]}`;
+}
+
+async function handleChat(
+  apiKey: string,
+  baseUrl: string,
+  recent: Message[],
+  stage?: InterviewStage
+) {
   const veniceResponse = await fetch(`${baseUrl}/chat/completions`, {
     method: "POST",
     headers: {
@@ -101,7 +131,7 @@ async function handleChat(apiKey: string, baseUrl: string, recent: Message[]) {
     body: JSON.stringify({
       model: "deepseek-v4-flash-0731",
       messages: [
-        { role: "system", content: INTERVIEW_SYSTEM_PROMPT },
+        { role: "system", content: interviewSystemPrompt(stage) },
         ...recent,
       ],
       temperature: 0.5,
@@ -244,10 +274,7 @@ async function handleSummarize(apiKey: string, baseUrl: string, recent: Message[
   if (!summary) {
     console.error("Failed to parse explore summary JSON:", raw.slice(0, 500));
     return NextResponse.json(
-      {
-        error: "Could not parse summary. Please try again.",
-        rawPreview: raw.slice(0, 200),
-      },
+      { error: "Could not parse summary. Please try again." },
       { status: 502 }
     );
   }
@@ -311,24 +338,26 @@ function normalizeSummary(raw: Record<string, unknown>) {
     })
     .filter((o) => o.title && (o.problem || o.aiApproach));
 
+  const furtherDiscovery = {
+    title: "Further discovery needed",
+    problem:
+      "There was not enough detail yet to prioritise concrete opportunities.",
+    aiApproach:
+      "A short AI Opportunity Call can clarify processes and high-value starting points.",
+    impact: "medium",
+    effort: "low",
+  };
+
+  const padded =
+    opportunities.length >= 2
+      ? opportunities
+      : opportunities.length === 1
+        ? [opportunities[0], furtherDiscovery]
+        : [furtherDiscovery, { ...furtherDiscovery, title: "Talk through the process" }];
+
   return {
     companyContext: String(raw.companyContext).slice(0, 600),
-    opportunities:
-      opportunities.length >= 2
-        ? opportunities
-        : opportunities.length === 1
-          ? opportunities
-          : [
-              {
-                title: "Further discovery needed",
-                problem:
-                  "There was not enough detail yet to prioritize concrete opportunities.",
-                aiApproach:
-                  "A short AI Opportunity Call can clarify processes and high-value starting points.",
-                impact: "medium",
-                effort: "low",
-              },
-            ],
+    opportunities: padded,
     suggestedNextStep: String(raw.suggestedNextStep).slice(0, 400),
   };
 }

@@ -111,10 +111,13 @@ export default function ExploreExperience() {
   }, [canSummarize]);
 
   const streamChatReply = async (history: ChatMessage[]) => {
+    const userCount = history.filter((m) => m.role === "user").length;
+    const stage =
+      EXPLORE_STAGES[Math.min(userCount, EXPLORE_STAGES.length - 1)]?.id;
     const response = await fetch("/api/explore", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history, action: "chat" }),
+      body: JSON.stringify({ messages: history, action: "chat", stage }),
     });
 
     if (!response.ok) {
