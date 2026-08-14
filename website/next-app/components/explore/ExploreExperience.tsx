@@ -685,7 +685,7 @@ export default function ExploreExperience() {
               {copied ? "Copied!" : "Copy summary"}
             </button>
             <Link
-              href="/contact"
+              href="/contact?topic=ai"
               className="inline-flex items-center justify-center bg-brand text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-dark transition-all min-h-[48px]"
             >
               Book an Opportunity Call
@@ -719,7 +719,7 @@ export default function ExploreExperience() {
         </p>
         <p className="text-center text-xs text-slate-400">
           Prefer a human conversation?{" "}
-          <Link href="/contact" className="text-brand hover:underline">
+          <Link href="/contact?topic=ai" className="text-brand hover:underline">
             Contact us
           </Link>{" "}
           or learn about our{" "}

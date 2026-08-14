@@ -158,7 +158,7 @@ export default function ControllingServices() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
-            href="/contact"
+            href="/contact?topic=controlling"
             className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all"
           >
             Get in Touch

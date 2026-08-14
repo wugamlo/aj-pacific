@@ -212,7 +212,7 @@ export default function AIServices() {
             Explore AI Opportunities
           </Link>
           <Link
-            href="/contact"
+            href="/contact?topic=ai"
             className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl shadow-lg border border-gray-200 font-bold hover:bg-slate-50 transition-all"
           >
             Book an Opportunity Call
