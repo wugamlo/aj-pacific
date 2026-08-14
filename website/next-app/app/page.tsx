@@ -32,7 +32,7 @@ const pathways = [
     href: "/services/controlling",
     title: "Controlling & Performance",
     description:
-      "KPIs, forecasting, reporting, and financial clarity for leadership decisions.",
+      "How you plan, report, and explain the numbers — so leadership can decide with a clear picture.",
     icon: LineChart,
     iconBg: "bg-gradient-to-br from-brand to-brand-light",
     ctaClass: "text-brand",

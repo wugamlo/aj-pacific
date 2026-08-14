@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Target, Coins, CalendarRange, GitCompare } from "lucide-react";
 import { pageMetadata } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Controlling & Performance",
   description:
-    "KPIs, forecasting, reporting, and financial clarity — data-driven controlling for leadership decisions in small and mid-sized organisations.",
+    "Practical controlling and financial accounting for small and mid-sized organisations. KPIs, planning, cost, and variance — so leadership can see what the numbers actually say.",
   path: "/services/controlling",
 });
 
@@ -12,164 +13,148 @@ const controllingServices = [
   {
     id: "kpi",
     title: "KPI Design & Implementation",
-    description: "Build meaningful metrics that drive decision-making. We help you identify, design, and implement KPIs that actually matter.",
+    description:
+      "A small set of measures that leadership actually uses. We start from the decisions you need to make, then design the metrics, ownership, and reporting around them.",
     items: [
-      "KPI framework development",
-      "Metric selection and validation",
-      "Dashboard design and implementation",
-      "KPI governance and maintenance"
+      "What should be measured — and what should not",
+      "Definitions, owners, and sources",
+      "A reporting rhythm that fits how you already work",
+      "A simple picture leadership can read without a briefing",
     ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    )
+    note: "Ideal starting point when reports exist but nobody quite trusts or uses them.",
+    icon: Target,
   },
   {
     id: "cost",
-    title: "Cost Optimization",
-    description: "Identify savings opportunities and implement sustainable cost reduction strategies without compromising quality.",
+    title: "Cost Optimisation",
+    description:
+      "Understand where money actually goes, then decide what is worth changing. The aim is a clearer cost picture — not a one-off cut that comes back next year.",
     items: [
-      "Cost structure analysis",
-      "Process efficiency reviews",
-      "Vendor and contract optimization",
-      "Zero-based budgeting approaches"
+      "Cost structure and drivers",
+      "Where process, not price, is the leak",
+      "Vendor and contract questions worth asking",
+      "What to leave alone",
     ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    )
+    icon: Coins,
   },
   {
     id: "budgeting",
     title: "Budgeting & Forecasting",
-    description: "Move beyond static spreadsheets. Implement rolling forecasts and dynamic budgeting that adapts to your business reality.",
+    description:
+      "Planning that matches how the business actually moves. Annual budgets still matter; a lighter forecast often matters more between those cycles.",
     items: [
-      "Annual budget preparation",
-      "Rolling forecast implementation",
-      "Scenario planning and modeling",
-      "Budget vs. actual analysis"
+      "Annual budget that leadership can stand behind",
+      "A rolling view that can be updated without a project",
+      "A few scenarios instead of a single frozen number",
+      "Budget versus actual, explained in plain language",
     ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    )
+    icon: CalendarRange,
   },
   {
     id: "variance",
-    title: "Variance Analysis",
-    description: "Understand what drives your numbers. Deep-dive analysis that explains the 'why' behind budget deviations.",
+    title: "Variance Analysis & Reporting",
+    description:
+      "Why the numbers moved — written so a managing director can act, not so a file can be archived. We tighten the monthly story and cut reporting that does not help.",
     items: [
-      "Monthly variance reporting",
-      "Root cause analysis",
-      "Corrective action planning",
-      "Management reporting packages"
+      "Monthly variance that answers “why”",
+      "Root causes, not just line-item noise",
+      "A short management pack instead of a data dump",
+      "What to stop producing",
     ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-      </svg>
-    )
+    note: "If a simpler report is the answer, we will say so — including when a new system is not.",
+    icon: GitCompare,
   },
-  {
-    id: "reporting",
-    title: "Management Reporting",
-    description: "Clear, concise reports that tell the story behind the numbers. From board presentations to operational dashboards.",
-    items: [
-      "Executive dashboard design",
-      "Board reporting packages",
-      "Automated report generation",
-      "Data visualization and storytelling"
-    ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    )
-  },
-  {
-    id: "systems",
-    title: "Systems & Process Design",
-    description: "Streamline your controlling function. We design processes and select tools that make your team more effective.",
-    items: [
-      "ERP system optimization",
-      "Process automation and workflow design",
-      "BI tool selection and implementation",
-      "Controlling function setup and restructuring"
-    ],
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    )
-  }
 ];
 
 export default function ControllingServices() {
   return (
     <div className="py-12">
-      {/* Hero Section */}
-      <div
-        className="text-center mb-16"
-      >
+      <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-          Controlling & Performance Management
+          Controlling & Performance
         </h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          Data-driven financial leadership that turns numbers into actionable insights. 
-          From KPIs to forecasting, we build systems that drive performance.
+          Practical controlling and financial accounting for small and mid-sized
+          organisations. We start from how you currently plan, report, and
+          explain the numbers — not from a new dashboard or system. The aim is
+          a picture leadership can use: a few meaningful KPIs, a forecast you
+          can update, and variance that says why, not only what.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <div className="glass px-6 py-3 flex items-center gap-2">
-            <span className="w-2 h-2 bg-brand rounded-full"></span>
-            <span className="text-sm font-medium text-slate-700">25 Years Experience</span>
-          </div>
-          <div className="glass px-6 py-3 flex items-center gap-2">
-            <span className="w-2 h-2 bg-brand rounded-full"></span>
-            <span className="text-sm font-medium text-slate-700">Cross-Industry Expertise</span>
-          </div>
-        </div>
       </div>
 
-      {/* Services Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-        {controllingServices.map((service, index) => (
-          <div
-            key={service.id}
-            className="glass p-6 flex flex-col h-full hover:shadow-xl transition-shadow duration-300"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-brand/10 rounded-lg text-brand">
-                {service.icon}
-              </div>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
-            <p className="text-slate-600 text-sm mb-4 flex-grow">{service.description}</p>
-            <ul className="space-y-2">
-              {service.items.map((item, idx) => (
-                <li key={idx} className="flex items-start text-sm text-slate-700">
-                  <span className="w-1.5 h-1.5 bg-brand rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      {/* CTA Section */}
-      <div
-        className="glass p-8 md:p-12 text-center"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
-          Ready to strengthen your financial control?
+      <div className="glass px-6 py-6 md:px-8 md:py-7 mb-12 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-slate-900 mb-3">
+          The other half of how we work
         </h2>
-        <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-          Let's discuss how we can optimize your controlling function 
-          and build performance management systems that scale.
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
+          One of us comes from controlling and financial accounting. That is why
+          this practice sits next to the AI work, not underneath it.
+        </p>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed">
+          The habit is the same as on the AI side: understand the process first,
+          then change only what improves decisions. Sometimes the useful next
+          step is a clearer monthly pack. Sometimes it is an AI-assisted draft
+          of the variance story. Sometimes it is leaving the numbers alone.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        {controllingServices.map((service) => {
+          const Icon = service.icon;
+          return (
+            <div
+              key={service.id}
+              className="glass p-6 md:p-8 flex flex-col h-full hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-brand/10 rounded-lg text-brand">
+                  <Icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">
+                  {service.title}
+                </h3>
+              </div>
+              <p className="text-slate-600 text-sm mb-4 leading-relaxed flex-grow">
+                {service.description}
+              </p>
+              <ul className="space-y-2 mb-4">
+                {service.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start text-sm text-slate-700"
+                  >
+                    <span className="w-1.5 h-1.5 bg-brand rounded-full mr-2 mt-1.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              {service.note && (
+                <p className="text-xs text-slate-500 italic border-t border-slate-100 pt-3">
+                  {service.note}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <p className="text-center text-slate-500 text-sm max-w-2xl mx-auto mb-12 leading-relaxed">
+        A clear view of how you steer the business is often the most important
+        first step — sometimes more valuable than another report.
+      </p>
+
+      <div className="glass p-8 md:p-12 text-center mb-8 border-l-4 border-brand md:border-l-0">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+          A focused controlling conversation
+        </h2>
+        <p className="text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
+          A 45–60 minute conversation about how you currently plan, report, and
+          explain the numbers. No obligation.
+        </p>
+        <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          We start with the pack you already produce — not with a tool
+          recommendation. The aim is clarity: which measures matter, where
+          reporting creates work without insight, and what is worth changing.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
@@ -177,6 +162,12 @@ export default function ControllingServices() {
             className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all"
           >
             Get in Touch
+          </Link>
+          <Link
+            href="/services/ai"
+            className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl shadow-lg border border-gray-200 font-bold hover:bg-slate-50 transition-all"
+          >
+            AI Consulting
           </Link>
           <Link
             href="/services"

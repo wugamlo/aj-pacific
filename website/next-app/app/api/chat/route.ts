@@ -10,7 +10,7 @@ Three complementary practices (overview: /services):
 
 **AI Consulting** (/services/ai): Opportunity Scan; Strategy & Roadmap; Process Automation & Agents (RAG, custom agents); Implementation & Enablement (training as part of delivery). Entry offer: AI Opportunity Call (45–60 min, no obligation) → /contact.
 
-**Controlling** (/services/controlling): KPIs, cost optimization, budgeting/forecasting, variance analysis.
+**Controlling** (/services/controlling): Practical controlling and financial accounting — KPIs, cost, budgeting/forecasting, variance and management reporting. Complementary to the AI work, not a full in-house finance department. Entry: a focused 45–60 min conversation via /contact.
 
 **Entry paths:** Free ~3 min process probe → /explore. Orientation first → /services/education. Project-minded conversation → AI Opportunity Call via /contact.
 

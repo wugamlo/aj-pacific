@@ -49,14 +49,14 @@ const pillars = [
   {
     href: "/services/controlling",
     title: "Controlling & Performance",
-    tagline: "Financial clarity that drives decisions",
+    tagline: "See what the numbers actually say",
     description:
-      "KPIs, forecasting, reporting, and financial clarity for leadership decisions.",
+      "Practical controlling and financial accounting — KPIs, planning, cost, and variance that leadership can use.",
     highlights: [
       "KPI design & implementation",
-      "Cost optimization",
+      "Cost optimisation",
       "Budgeting & forecasting",
-      "Variance analysis",
+      "Variance analysis & reporting",
     ],
     cta: "Explore Controlling Services",
     accent: "finance" as const,

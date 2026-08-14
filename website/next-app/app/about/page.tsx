@@ -31,12 +31,12 @@ const partners = [
     role: "Finance & Controlling Partner",
     experience: "25 years in finance",
     focus:
-      "Controlling, corporate reporting, and performance management — KPI frameworks, budgeting, forecasting, and the financial discipline that keeps decisions grounded.",
+      "Controlling and financial accounting — the measures, plans, and monthly story that keep leadership decisions grounded. Same process-first habit as the AI work: understand how you steer today, then change only what helps.",
     strengths: [
       "KPI design & implementation",
+      "Cost optimisation",
       "Budgeting & forecasting",
-      "Cost optimization",
-      "Variance analysis & management reporting",
+      "Variance analysis & reporting",
     ],
     accent: "finance" as const,
     icon: TrendingUp,

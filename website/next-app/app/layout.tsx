@@ -101,7 +101,7 @@ export default function RootLayout({
                   >
                     <div className="font-medium">Controlling & Performance</div>
                     <div className="text-xs text-slate-500 mt-0.5">
-                      KPIs, budgeting & forecasting
+                      KPIs, planning, and variance
                     </div>
                   </Link>
                 </div>
