@@ -107,7 +107,7 @@ export default function SummaryCards({ summary }: SummaryCardsProps) {
                 }`}
               >
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">
+                  <p className="text-sm font-bold uppercase tracking-[0.12em] text-slate-600 mb-2 pb-1.5 border-b border-slate-200">
                     Today
                   </p>
                   <p className="text-slate-700 text-sm leading-relaxed">
@@ -115,7 +115,7 @@ export default function SummaryCards({ summary }: SummaryCardsProps) {
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1.5">
+                  <p className="text-sm font-bold uppercase tracking-[0.12em] text-brand mb-2 pb-1.5 border-b border-brand/25">
                     Possible
                   </p>
                   <p className="text-slate-700 text-sm leading-relaxed">
