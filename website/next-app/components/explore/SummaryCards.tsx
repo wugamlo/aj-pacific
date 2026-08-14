@@ -112,33 +112,13 @@ export default function SummaryCards({ summary }: SummaryCardsProps) {
                     {item.problem}
                   </p>
                 </div>
-                <div className="flex gap-3">
-                  <span
-                    className="hidden md:flex shrink-0 mt-5 text-brand/50"
-                    aria-hidden
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1.5">
-                      Possible
-                    </p>
-                    <p className="text-slate-700 text-sm leading-relaxed">
-                      {item.aiApproach}
-                    </p>
-                  </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1.5">
+                    Possible
+                  </p>
+                  <p className="text-slate-700 text-sm leading-relaxed">
+                    {item.aiApproach}
+                  </p>
                 </div>
               </div>
 
