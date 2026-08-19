@@ -13,6 +13,7 @@ const pathways = [
   {
     href: "/services/education",
     title: "AI Education",
+    chooseIf: "If you want a grounded briefing before any project",
     description:
       "Practical orientation for people and small teams who want to understand AI before taking action.",
     icon: GraduationCap,
@@ -22,6 +23,7 @@ const pathways = [
   {
     href: "/services/ai",
     title: "AI Consulting",
+    chooseIf: "If you have friction and want a scan, a plan, or a working system",
     description:
       "From opportunity scan to working automation, agents, and implementation.",
     icon: Bot,
@@ -31,6 +33,8 @@ const pathways = [
   {
     href: "/services/controlling",
     title: "Controlling & Performance",
+    chooseIf:
+      "If leadership cannot quite use the numbers you already produce",
     description:
       "How you plan, report, and explain the numbers — so leadership can decide with a clear picture.",
     icon: LineChart,
@@ -64,14 +68,31 @@ export default function Home() {
                 <span className="text-accent-dark">AI</span> &{" "}
                 <span className="text-brand">Finance</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed font-medium max-w-2xl mx-auto">
-                Practical AI and financial controlling for small and mid-sized
-                companies — from orientation to working solutions.
-                <br className="hidden sm:block" />
-                We help you move clearly and step by step.
+              <p className="text-lg md:text-xl text-slate-700 mb-4 leading-relaxed font-medium max-w-2xl mx-auto">
+                Two partners in Hong Kong. We help small and mid-sized
+                organisations see where practical AI and clearer numbers actually
+                help — and where they do not. You work with us directly.
+              </p>
+              <p className="text-base md:text-lg text-slate-600 mb-6 leading-relaxed max-w-2xl mx-auto">
+                Orientation if you want to understand first. A focused call if
+                you already have a situation. A three-minute process probe if
+                you want ideas before you write.
+              </p>
+              <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto mb-8">
+                We work with small and mid-sized organisations, and with
+                individuals who want a practical starting point. Direct, focused,
+                and realistic about what is achievable. Open to work across Asia
+                and with European partners when useful.
               </p>
 
-              {/* Primary Explore banner — high-energy entry point */}
+              <Link
+                href="/contact?topic=ai"
+                className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all mb-5"
+              >
+                Book a free 45–60 minute Opportunity Call
+              </Link>
+
+              {/* Explore — self-serve preview; the call is the human path */}
               <Link
                 href="/explore"
                 className="group relative block w-full max-w-2xl mx-auto overflow-hidden rounded-2xl bg-gradient-to-r from-brand-dark via-brand to-brand-light p-[1px] shadow-xl shadow-brand/25 hover:shadow-2xl hover:shadow-brand/35 hover:scale-[1.02] transition-all duration-300"
@@ -120,12 +141,20 @@ export default function Home() {
                 </div>
               </Link>
 
-              <Link
-                href="/services"
-                className="mt-5 inline-block text-slate-700 font-semibold hover:text-brand transition-colors underline-offset-4 hover:underline"
-              >
-                View our services
-              </Link>
+              <p className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                <Link
+                  href="/services"
+                  className="text-slate-700 font-semibold hover:text-brand transition-colors underline-offset-4 hover:underline"
+                >
+                  See the three practices
+                </Link>
+                <Link
+                  href="/services/ai/where-ai-helps"
+                  className="text-slate-600 font-medium hover:text-brand transition-colors underline-offset-4 hover:underline"
+                >
+                  Six typical AI situations
+                </Link>
+              </p>
             </div>
           </div>
 
@@ -147,13 +176,16 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
                     {path.title}
                   </h3>
+                  <p className={`text-sm font-semibold mb-2 ${path.ctaClass}`}>
+                    {path.chooseIf}
+                  </p>
                   <p className="text-slate-600 leading-relaxed flex-grow">
                     {path.description}
                   </p>
                   <span
                     className={`mt-4 inline-flex items-center text-sm font-semibold ${path.ctaClass}`}
                   >
-                    Learn more
+                    See this practice
                     <svg
                       className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
                       fill="none"
@@ -173,22 +205,10 @@ export default function Home() {
             })}
           </div>
 
-          {/* Who we work with + location */}
-          <div className="mt-8 max-w-2xl mx-auto bg-white rounded-xl border border-slate-200/80 shadow-sm px-6 py-5 space-y-3">
-            <p className="text-slate-700 text-sm md:text-base leading-relaxed">
-              We work with small and mid-sized organisations (and individuals
-              who want a practical starting point). Direct, focused, and
-              realistic about what is achievable.
-            </p>
-            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-              Based in Hong Kong. Open to work across Asia and with European
-              partners when useful.
-            </p>
-          </div>
         </div>
       </div>
 
-      {/* Hong Kong — visual anchor; full location copy lives in supporting block */}
+      {/* Hong Kong — visual anchor; location is stated in the hero */}
       <div className="relative mt-16 -mx-4">
         <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl">
           <img

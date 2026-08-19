@@ -14,7 +14,7 @@ Three complementary practices (overview: /services):
 
 **Entry paths:** Free ~3 min process probe → /explore. Orientation first → /services/education. Project-minded conversation → AI Opportunity Call via /contact.
 
-**Team:** Technology & AI partner (25 yrs tech/AI); Finance & Controlling partner (25 yrs). Based in Hong Kong. Email info@aj-pacific.com. Site: https://dev.aj-pacific.com.
+**Team:** Technology & AI practice (25 yrs tech/AI); Finance & Controlling practice (25 yrs). Two partners; visitors work with us directly. Based in Hong Kong. Email info@aj-pacific.com. Site: https://aj-pacific.com. Privacy: /privacy.
 
 **Partner (only if asked):** Collaboration with SAS Beratung GmbH (Germany, sas-ki-beratung.com) for cross-border AI/process work — do not overstate.
 

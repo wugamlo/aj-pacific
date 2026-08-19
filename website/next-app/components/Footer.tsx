@@ -19,8 +19,8 @@ const Footer = () => {
                             />
                         </Link>
                         <p className="text-slate-400 text-sm leading-relaxed">
-                            Practical Solutions, Lasting Value.<br />
-                            Your partner in AI & Finance.
+                            Your partner in AI & Finance.<br />
+                            Two partners in Hong Kong — practical solutions, lasting value.
                         </p>
                     </div>
 
@@ -81,8 +81,8 @@ const Footer = () => {
                 <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
                     <p>© {currentYear} AJ Pacific (H.K.) Limited. All rights reserved.</p>
                     <div className="flex gap-4 mt-2 md:mt-0">
-                        <Link href="#" className="hover:text-brand-light transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-brand-light transition-colors">Terms of Service</Link>
+                        <Link href="/privacy" className="hover:text-brand-light transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-brand-light transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>

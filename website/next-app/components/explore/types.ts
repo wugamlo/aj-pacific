@@ -32,7 +32,7 @@ export const EXPLORE_STAGES: ExploreStage[] = [
   {
     id: "context",
     title: "Context",
-    hint: "Tell us about your organization and role.",
+    hint: "Tell us about your organisation and role.",
     chips: [
       "Finance / Controlling",
       "Operations",
@@ -71,7 +71,7 @@ export const EXPLORE_STAGES: ExploreStage[] = [
 export const MIN_ANSWERS_FOR_SUMMARY = 3;
 
 export const OPENING_MESSAGE =
-  "I'll help you explore where AI could create value in your processes — this is a short guided conversation, not a permanent record.\n\nAfter a few answers (about 3), the Generate summary button unlocks with concrete opportunity ideas. To start: what kind of organization are you in, and what is your role?";
+  "I'll help you explore where AI could create value in your processes. After a few answers, Generate summary unlocks with practical opportunity ideas.\n\nTo start: what kind of organisation are you in, and what is your role?";
 
 /**
  * Pre-scripted sample conversations — load into Explore chat so visitors can

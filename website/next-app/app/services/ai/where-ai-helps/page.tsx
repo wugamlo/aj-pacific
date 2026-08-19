@@ -123,24 +123,12 @@ export default function WhereAiHelpsPage() {
         <div className="flex justify-center mb-8" aria-hidden>
           <WhereAiHelpsHeroGraphic className="w-full max-w-md h-auto opacity-95" />
         </div>
-        <div className="space-y-3 text-lg text-slate-600 leading-relaxed text-left sm:text-center">
-          <p>
-            Realistic situations of everyday process friction where practical AI
-            can help — especially in smaller organisations.
-          </p>
-          <p>
-            They are{" "}
-            <span className="font-medium text-slate-800">
-              illustrative only
-            </span>
-            , not case studies of our projects, and not a personalised
-            recommendation for your organisation.
-          </p>
-          <p>
-            Every organisation is different; the aim is to show the kinds of
-            situations that are often worth exploring further.
-          </p>
-        </div>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Everyday process friction where practical AI can help — especially in
+          smaller organisations.{" "}
+          <span className="font-medium text-slate-800">Illustrative only</span>
+          , not case studies or a personalised recommendation.
+        </p>
       </div>
 
       {/* Situation cards */}
@@ -208,7 +196,7 @@ export default function WhereAiHelpsPage() {
         </h2>
         <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
           Prefer a short guided conversation about your own processes, or a
-          focused call with us? Both are free of obligation.
+          free Opportunity Call with us? Both are free and without obligation.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
@@ -218,7 +206,7 @@ export default function WhereAiHelpsPage() {
             Explore AI Opportunities
           </Link>
           <Link
-            href="/contact"
+            href="/contact?topic=ai"
             className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl shadow-lg border border-gray-200 font-bold hover:bg-slate-50 transition-all"
           >
             Book an Opportunity Call

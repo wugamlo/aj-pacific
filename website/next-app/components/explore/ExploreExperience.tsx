@@ -717,8 +717,15 @@ export default function ExploreExperience() {
         <p className="text-center text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
           This exploration is for discovery only. Conversation turns are not
           stored permanently on our servers. You can copy the summary or book a
-          call when you are ready. Indicative only — not a full Opportunity
-          Scan.
+          free Opportunity Call when you are ready. Indicative only — not a
+          full Opportunity Scan. See the{" "}
+          <Link
+            href="/privacy"
+            className="text-slate-600 underline underline-offset-2 hover:text-brand"
+          >
+            Privacy Policy
+          </Link>
+          .
         </p>
         <p className="text-center text-xs text-slate-400">
           Prefer a human conversation?{" "}

@@ -5,16 +5,16 @@ import { pageMetadata } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "About",
   description:
-    "AJ Pacific is two experienced consultants in Hong Kong — technology and AI, and finance and controlling — working directly with small and mid-sized organisations.",
+    "AJ Pacific (H.K.) Limited is two experienced consultants in Hong Kong — technology and AI, and finance and controlling — working directly with small and mid-sized organisations.",
   path: "/about",
 });
 
 const cardClass =
   "bg-white rounded-2xl shadow-lg p-8 border border-slate-200/80 hover:shadow-xl transition-shadow duration-300";
 
-const partners = [
+const practices = [
   {
-    role: "Technology & AI Partner",
+    role: "Technology & AI",
     experience: "25 years in technology",
     focus:
       "Business intelligence, enterprise systems, and practical AI — from strategy through hands-on implementation of automation, agents, and document intelligence.",
@@ -28,7 +28,7 @@ const partners = [
     icon: Cpu,
   },
   {
-    role: "Finance & Controlling Partner",
+    role: "Finance & Controlling",
     experience: "25 years in finance",
     focus:
       "Controlling and financial accounting — the measures, plans, and monthly story that keep leadership decisions grounded. Same process-first habit as the AI work: understand how you steer today, then change only what helps.",
@@ -43,9 +43,17 @@ const partners = [
   },
 ];
 
+const weDoNot = [
+  "Staff projects with a rotating junior team",
+  "Start from a tool or vendor recommendation",
+  "Pretend AI is always the answer",
+  "Run your finance function",
+  "Publish client names",
+];
+
 export default function About() {
   return (
-    <div className="relative py-12 max-w-6xl mx-auto" key="about-team-v2">
+    <div className="relative py-12 max-w-6xl mx-auto" key="about-company-v3">
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="gradient-blob blob-green w-96 h-96 -top-20 -right-20 animate-float-slow" />
         <div className="gradient-blob blob-gold w-72 h-72 top-1/3 -left-10 animate-float-delayed" />
@@ -57,25 +65,24 @@ export default function About() {
             Who We Are
           </h1>
           <p className="text-xl text-slate-700 leading-relaxed mb-4">
-            AJ Pacific is a team of{" "}
+            AJ Pacific (H.K.) Limited is{" "}
             <strong className="text-slate-900">two experienced consultants</strong>{" "}
             based in Hong Kong. We work as partners with our clients — not as a
-            large firm with rotating juniors.
+            large firm with rotating juniors. You work with us directly.
           </p>
           <p className="text-slate-600 leading-relaxed">
-            One of us comes from finance and controlling. The other from
-            technology and AI. Together we help organizations improve how they
-            decide, automate, and perform — with practical solutions and lasting
-            value.
+            One practice is finance and controlling. The other is technology and
+            AI. Together we help organisations improve how they decide, automate,
+            and perform — with practical solutions and lasting value.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-10">
-          {partners.map((person) => {
-            const Icon = person.icon;
-            const isAi = person.accent === "ai";
+          {practices.map((practice) => {
+            const Icon = practice.icon;
+            const isAi = practice.accent === "ai";
             return (
-              <section key={person.role} className={cardClass}>
+              <section key={practice.role} className={cardClass}>
                 <div className="flex items-start gap-5 mb-6">
                   <div
                     className={`w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 shadow-md ${
@@ -89,30 +96,30 @@ export default function About() {
                   </div>
                   <div className="min-w-0 pt-1">
                     <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-1">
-                      Partner
+                      Practice
                     </p>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-900 leading-snug">
-                      {person.role}
+                      {practice.role}
                     </h2>
                     <p
                       className={`text-sm font-semibold mt-1 ${
                         isAi ? "text-accent-dark" : "text-brand"
                       }`}
                     >
-                      {person.experience}
+                      {practice.experience}
                     </p>
                   </div>
                 </div>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {person.focus}
+                  {practice.focus}
                 </p>
 
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">
                   Focus areas
                 </p>
                 <ul className="space-y-2">
-                  {person.strengths.map((item) => (
+                  {practice.strengths.map((item) => (
                     <li
                       key={item}
                       className="flex items-start text-sm text-slate-700"
@@ -136,8 +143,8 @@ export default function About() {
           <p className="text-slate-700 leading-relaxed mb-6">
             We work <strong>with</strong> you, not <strong>for</strong> you —
             building solutions side by side. No buzzword decks. No black-box
-            handovers. You get direct access to both of us when the work spans
-            finance and technology.
+            handovers. You get direct access to both practices when the work
+            spans finance and technology.
           </p>
           <ol className="space-y-3 mb-6">
             {[
@@ -147,7 +154,7 @@ export default function About() {
               },
               {
                 step: "2. Assess",
-                text: "We identify realistic, high-impact opportunities and also where AI is not the right answer.",
+                text: "We identify realistic, high-impact opportunities and also where AI is not the right answer. On an AI engagement this is typically a short written scan: processes, friction, benefit versus effort, and a clear recommendation.",
               },
               {
                 step: "3. Design",
@@ -155,7 +162,7 @@ export default function About() {
               },
               {
                 step: "4. Build & Transfer",
-                text: "We implement and enable your team so you can run and extend the solution independently.",
+                text: "We implement and enable your team so you can run and extend the solution independently — a working system plus knowledge transfer, not a black box.",
               },
             ].map((item) => (
               <li key={item.step} className="flex items-start gap-3">
@@ -169,6 +176,34 @@ export default function About() {
           <p className="text-slate-600 text-sm leading-relaxed">
             Whether the starting point is an AI opportunity or a controlling
             challenge, we explore, decide, and deliver together.
+          </p>
+        </div>
+
+        <div className={`${cardClass} mb-8`}>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">
+            What we do not do
+          </h3>
+          <ul className="space-y-2">
+            {weDoNot.map((item) => (
+              <li
+                key={item}
+                className="flex items-start text-sm text-slate-700 leading-relaxed"
+              >
+                <span className="w-1.5 h-1.5 rounded-full mr-2 mt-1.5 shrink-0 bg-slate-400" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={`${cardClass} mb-8`}>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">
+            How we are set up
+          </h3>
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+            AJ Pacific (H.K.) Limited is based in Hong Kong. We work with
+            organisations across Asia, and with European partners when that is
+            useful.
           </p>
         </div>
 
@@ -206,7 +241,7 @@ export default function About() {
             href="/contact"
             className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl shadow-lg border border-slate-200 font-bold hover:bg-slate-50 transition-all"
           >
-            Get in Touch
+            Book an Opportunity Call
           </Link>
         </div>
       </div>

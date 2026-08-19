@@ -74,11 +74,16 @@ export default function ControllingServices() {
           Controlling & Performance
         </h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          Practical controlling and financial accounting for small and mid-sized
-          organisations. We start from how you currently plan, report, and
-          explain the numbers — not from a new dashboard or system. The aim is
-          a picture leadership can use: a few meaningful KPIs, a forecast you
-          can update, and variance that says why, not only what.
+          Practical controlling — KPIs, planning, and variance — for small and
+          mid-sized organisations. Choose this if you already report, but the
+          pack is not what leadership uses to decide. We start from how you
+          currently plan, report, and explain the numbers — not from a new
+          dashboard or system.
+        </p>
+        <p className="text-base text-slate-600 max-w-3xl mx-auto leading-relaxed mt-4">
+          You leave with a smaller set of measures, a reporting rhythm you can
+          keep, and a monthly note that answers why — or a recommendation to
+          stop producing a report.
         </p>
       </div>
 
@@ -148,20 +153,21 @@ export default function ControllingServices() {
           A focused controlling conversation
         </h2>
         <p className="text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
-          A 45–60 minute conversation about how you currently plan, report, and
-          explain the numbers. No obligation.
+          Free, 45–60 minutes, no obligation. One or both partners — not a
+          salesperson, and not a junior team.
         </p>
         <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
           We start with the pack you already produce — not with a tool
-          recommendation. The aim is clarity: which measures matter, where
-          reporting creates work without insight, and what is worth changing.
+          recommendation. You leave with a verbal picture of which measures
+          matter, where reporting creates work without insight, and what is
+          worth changing.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="/contact?topic=controlling"
             className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all"
           >
-            Get in Touch
+            Book a controlling conversation
           </Link>
           <Link
             href="/services/ai"

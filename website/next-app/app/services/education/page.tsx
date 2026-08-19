@@ -21,15 +21,18 @@ const gains = [
   "Practical orientation on tools, setups, and first steps",
 ];
 
-const topics = [
+const coreTopics = [
   "How large language models work (plain-language overview)",
   "Current capabilities and real limitations",
-  "Chat interfaces vs API / custom applications",
+  "Chat interfaces vs custom applications — what the difference means in practice",
+  "How to evaluate tools and avoid common dead ends",
   "Recommended ways to get started (subscriptions and tools)",
+];
+
+const deeperTopics = [
   "Local vs cloud options and when each makes sense",
   "Simple AI-assisted coding and automation workflows",
   "Basic deployment options (including VPS)",
-  "How to evaluate tools and avoid common dead ends",
 ];
 
 const formats = [
@@ -54,13 +57,21 @@ export default function EducationServices() {
   return (
     <div className="py-12">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-          AI Education & Orientation
+        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
+          AI Education
         </h1>
+        <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-6">
+          Orientation, not a course
+        </p>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          A clear, practical introduction to modern AI for individuals and small
-          teams. The goal is understanding and realistic first steps — not hype
-          or heavy theory.
+          A briefing for people who will decide what to do next — owners,
+          managers, and small teams who need a shared, unhyped picture of
+          current AI before buying tools or starting a project.
+        </p>
+        <p className="text-base text-slate-600 max-w-3xl mx-auto leading-relaxed mt-4">
+          You leave with a short written orientation note: what applies to you,
+          what to ignore, and sensible first steps. Not a certificate. Not a
+          vendor list to implement that week.
         </p>
       </div>
 
@@ -113,16 +124,34 @@ export default function EducationServices() {
           Topics typically covered
         </h2>
         <p className="text-sm text-slate-500 mb-6 leading-relaxed">
-          Orientation topics — depth matched to the group. Not a fixed curriculum
-          or certification track.
+          Decision-level topics first. Depth matched to the group — not a fixed
+          curriculum or certification track.
         </p>
-        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
-          {topics.map((item) => (
+        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
+          {coreTopics.map((item) => (
             <li
               key={item}
               className="flex items-start text-sm text-slate-700 leading-relaxed"
             >
               <span className="w-1.5 h-1.5 bg-slate-600 rounded-full mr-2 mt-1.5 shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <h3 className="text-sm font-semibold text-slate-800 mb-2">
+          If the group wants more depth
+        </h3>
+        <p className="text-sm text-slate-500 mb-4 leading-relaxed">
+          For operators and technically curious owners — included when it helps
+          the decision, not as a default curriculum.
+        </p>
+        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
+          {deeperTopics.map((item) => (
+            <li
+              key={item}
+              className="flex items-start text-sm text-slate-700 leading-relaxed"
+            >
+              <span className="w-1.5 h-1.5 bg-slate-400 rounded-full mr-2 mt-1.5 shrink-0" />
               <span>{item}</span>
             </li>
           ))}
@@ -162,7 +191,8 @@ export default function EducationServices() {
         </h2>
         <p className="text-slate-600 mb-6 max-w-2xl mx-auto leading-relaxed">
           Get in touch if you want a practical orientation session or workshop.
-          Duration and focus are agreed case by case.
+          Duration and focus are agreed case by case — typically a session or a
+          short workshop, in English, in Hong Kong or remote.
         </p>
         <p className="text-slate-500 text-sm mb-8 max-w-2xl mx-auto leading-relaxed">
           When you want clarity on a concrete use case or system, we also offer{" "}
@@ -179,7 +209,7 @@ export default function EducationServices() {
             href="/contact?topic=education"
             className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all"
           >
-            Get in Touch
+            Ask about a session
           </Link>
           <Link
             href="/services"

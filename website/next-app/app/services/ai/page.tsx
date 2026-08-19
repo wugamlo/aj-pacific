@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Search, Map, Bot, Wrench } from "lucide-react";
 import { pageMetadata } from "@/lib/site";
+import { OPPORTUNITY_CALL } from "@/lib/copy";
 
 export const metadata = pageMetadata({
   title: "AI Consulting",
@@ -21,20 +22,21 @@ const aiServices = [
       "Benefit / effort evaluation",
       "Prioritized roadmap",
     ],
-    note: "Ideal starting point when you want clarity before investing further. Sometimes the most valuable outcome is a clearer process — even if the conclusion is that AI is not the right next step yet.",
+    note: "You leave with a short written note: the processes we understood, where friction sits, two to four opportunity areas with benefit versus effort, and a clear recommendation — including when AI is not the next step.",
     icon: Search,
   },
   {
     id: "strategy-roadmap",
     title: "AI Strategy & Roadmap",
     description:
-      "Development of a clear, business-aligned AI strategy. We define goals, guidelines, governance principles, roles, and a realistic implementation plan that fits your organization and resources.",
+      "Development of a clear, business-aligned AI strategy. We define goals, guidelines, governance principles, roles, and a realistic implementation plan that fits your organisation and resources.",
     items: [
       "Business-aligned goals & guidelines",
       "Governance principles",
       "Roles and ownership",
       "Realistic implementation plan",
     ],
+    note: "You leave with a one-page roadmap: goals, ownership, and what not to start yet.",
     icon: Map,
   },
   {
@@ -48,6 +50,7 @@ const aiServices = [
       "Workflow automation",
       "Knowledge management support",
     ],
+    note: "You leave with a working assistant or workflow on a named process — not a generic chatbot.",
     icon: Bot,
   },
   {
@@ -61,7 +64,7 @@ const aiServices = [
       "Knowledge transfer",
       "Team enablement for independent operation",
     ],
-    note: "For orientation before projects, see AI Education.",
+    note: "You leave with a system your team can run, plus training so they can extend it. For orientation before projects, see AI Education.",
     icon: Wrench,
   },
 ];
@@ -75,46 +78,16 @@ export default function AIServices() {
           AI Consulting
         </h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          Practical AI solutions focused on business value. We start by
-          understanding your actual processes and goals — not with tools or
-          technology recommendations. Only once the work is clear do we identify
-          where AI can create real leverage, design a realistic approach, and
-          implement working systems. Particular strength in process automation,
-          document intelligence, and custom agents.
+          Practical AI focused on business value. We start with your processes
+          and goals — not with a tool recommendation. Particular strength in
+          process automation, document intelligence, and custom agents.
         </p>
       </div>
 
-      {/* European Collaboration — prominent, process-first partnership */}
-      <div className="glass px-6 py-6 md:px-8 md:py-7 mb-12 max-w-3xl mx-auto">
-        <h2 className="text-lg font-bold text-slate-900 mb-3">
-          European Collaboration
-        </h2>
-        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
-          We work closely with our European partner{" "}
-          <span className="font-medium text-slate-800">SAS Beratung GmbH</span>{" "}
-          in Germany (
-          <a
-            href="https://sas-ki-beratung.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand hover:text-brand-dark underline underline-offset-2"
-          >
-            sas-ki-beratung.com
-          </a>
-          ).
-        </p>
-        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
-          Together we combine practical AI implementation and financial
-          expertise with deep process analysis and governance experience. This
-          allows us to support both local initiatives in Asia and cross-border
-          projects that benefit from European process discipline and regulatory
-          understanding.
-        </p>
-        <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-          The partnership is especially valuable when clear process
-          understanding needs to come before any technology decision.
-        </p>
-      </div>
+      <p className="text-center text-slate-600 text-sm md:text-base max-w-2xl mx-auto mb-10 leading-relaxed">
+        Most work starts with a scan. Strategy, automation, and implementation
+        only follow if the scan says they should.
+      </p>
 
       {/* Four service cards */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -151,7 +124,8 @@ export default function AIServices() {
                 <p className="text-xs text-slate-500 italic border-t border-slate-100 pt-3">
                   {service.id === "implementation-enablement" ? (
                     <>
-                      For orientation before projects, see{" "}
+                      You leave with a system your team can run, plus training so
+                      they can extend it. For orientation before projects, see{" "}
                       <Link
                         href="/services/education"
                         className="text-accent-dark not-italic font-medium underline underline-offset-2 hover:text-slate-800"
@@ -178,7 +152,7 @@ export default function AIServices() {
       {/* Bridge to illustrative situations */}
       <div className="glass px-6 py-5 md:px-8 md:py-6 mb-12 max-w-3xl mx-auto text-center">
         <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-3">
-          Curious what practical AI often looks like in smaller organisations?
+          Six typical situations — illustrative, not case studies.
         </p>
         <Link
           href="/services/ai/where-ai-helps"
@@ -192,30 +166,29 @@ export default function AIServices() {
       {/* Entry offer + CTA */}
       <div className="glass p-8 md:p-12 text-center mb-8 border-l-4 border-brand md:border-l-0">
         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
-          AI Opportunity Call
+          {OPPORTUNITY_CALL.title}
         </h2>
         <p className="text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
-          A focused 45–60 minute conversation to explore your current situation
-          and identify potential high-value opportunities. No obligation.
+          {OPPORTUNITY_CALL.duration} {OPPORTUNITY_CALL.who}
+        </p>
+        <p className="text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
+          {OPPORTUNITY_CALL.leaveWith}
         </p>
         <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-          We start with understanding your processes and goals — not with a tool
-          recommendation. The aim is clarity: where friction exists, where AI
-          may help, and where it may not. Pragmatic, independent, and focused on
-          measurable improvement.
+          {OPPORTUNITY_CALL.next} {OPPORTUNITY_CALL.prepare}
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
-            href="/explore"
+            href="/contact?topic=ai"
             className="inline-block bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-dark hover:scale-105 transition-all"
           >
-            Explore AI Opportunities
+            Book a free Opportunity Call
           </Link>
           <Link
-            href="/contact?topic=ai"
+            href="/explore"
             className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl shadow-lg border border-gray-200 font-bold hover:bg-slate-50 transition-all"
           >
-            Book an Opportunity Call
+            Or explore in 3 minutes
           </Link>
           <Link
             href="/services"
@@ -224,6 +197,33 @@ export default function AIServices() {
             ← Back to Services
           </Link>
         </div>
+      </div>
+
+      <div className="glass px-6 py-6 md:px-8 md:py-7 max-w-3xl mx-auto">
+        <h2 className="text-lg font-bold text-slate-900 mb-3">
+          European Collaboration
+        </h2>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-3">
+          We work closely with our European partner{" "}
+          <span className="font-medium text-slate-800">SAS Beratung GmbH</span>{" "}
+          in Germany (
+          <a
+            href="https://sas-ki-beratung.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand hover:text-brand-dark underline underline-offset-2"
+          >
+            sas-ki-beratung.com
+          </a>
+          ). Together we combine practical AI implementation and financial
+          expertise with deep process analysis and governance experience — useful
+          for local work in Asia and for cross-border projects that need
+          European process discipline.
+        </p>
+        <p className="text-sm md:text-base text-slate-600 leading-relaxed">
+          The partnership is especially valuable when clear process
+          understanding needs to come before any technology decision.
+        </p>
       </div>
     </div>
   );
